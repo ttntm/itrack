@@ -1,8 +1,11 @@
 <template>
   <section class="tasklist">
-    <Task v-for="task in tasklist" :key="task.id" :task="task" @remove:task="deleteTaskFromList($event)" />
+    <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="updateTotal($event)" @update:total="updateTotal" />
   </section>
-  <section class="new-task mt-8">
+  <section v-if="tasklist.length > 0 || total > 0" class="my-6">
+    <p class="text-center text-gray-600">Total: {{ totalDisplay }}</p>
+  </section>
+  <section class="new-task mt-6">
     <InputText v-model="newTask.name" @keyup.enter="createNewTask" />
     <BtnCreateTask @click="createNewTask" />
   </section>
@@ -13,8 +16,9 @@ import BtnCreateTask from './button/BtnCreateTask.vue';
 import InputText from './input/InputText.vue'
 import Task from './Task.vue';
 
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useStore } from '../store.js';
+import { formatTime } from '../utils.js'
 
 export default {
   name: 'TaskList',
@@ -24,19 +28,22 @@ export default {
     Task
   },
   setup() {
-    const store = useStore();
+    const { addTask, tasklist } = useStore();
 
-    const tasklist = computed(() => store.state.taskList);
     const newTask = reactive({
       id: '',
-      name: ''
+      name: '',
+      taskActive: false
     });
+
+    const total = ref(0);
+    const totalDisplay = computed(() => { return formatTime(total.value) });
 
     const createNewTask = () => {
       if (newTask.name) {
         newTask.id = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
 
-        store.addTask({ ...newTask });
+        addTask({ ...newTask });
 
         newTask.id = '';
         newTask.name= '';
@@ -46,15 +53,21 @@ export default {
       }
     }
 
-    const deleteTaskFromList = (task) => {
-      store.removeTask(task);
+    const updateTotal = (minus) => {
+      if (minus) {
+        total.value = total.value - minus;
+      } else {
+        total.value++
+      }
     }
 
     return {
       createNewTask,
-      deleteTaskFromList,
       tasklist,
-      newTask
+      newTask,
+      total,
+      totalDisplay,
+      updateTotal
     }
   }
 }

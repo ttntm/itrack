@@ -1,21 +1,39 @@
-import { reactive, readonly } from 'vue';
+import { computed, reactive } from 'vue';
+
+const state = reactive({
+  tasklist: []
+});
 
 export const useStore = () => {
-  const state = reactive({
-    taskList: []
-  });
+  const getTasklist = computed(() => state.tasklist);
 
   const addTask = (task) => {
-    state.taskList.push(task);
+    state.tasklist.push(task);
   }
 
   const removeTask = (toRemove) => {
-    state.taskList = state.taskList.filter(task => task.id !== toRemove.id);
+    state.tasklist = state.tasklist.filter(task => task.id !== toRemove.id);
+  }
+
+  const setActiveTask = (id) => {
+    state.tasklist.forEach(task => {
+      task.id === id ? task.taskActive = true : task.taskActive = false;
+    });
+  }
+
+  const setPausedTask = (id) => {
+    state.tasklist.forEach(task => {
+      if (task.id === id) {
+        task.taskActive = false;
+      }
+    });
   }
 
   return {
     addTask,
     removeTask,
-    state: readonly(state)
+    setActiveTask,
+    setPausedTask,
+    tasklist: getTasklist
   };
 }
