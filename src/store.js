@@ -1,5 +1,7 @@
 import { computed, reactive } from 'vue';
 
+const ls = window.localStorage;
+
 // keep the state object private so that we can have shared state across components!
 const state = reactive({
   tasklist: []
@@ -32,11 +34,30 @@ export const useStore = () => {
     });
   }
 
+  const writeStateToLS = () => {
+    ls.setItem('iState', JSON.stringify(state));
+  }
+
+  const readStateFromLS = () => {
+    const stored = ls.getItem('iState');
+    const storedState = JSON.parse(stored);
+
+    if (storedState) {
+      Object.keys(state).map(key => {
+        if (storedState[key]) {
+          state[key] = storedState[key];
+        }
+      })
+    }
+  }
+
   return {
     addTask,
     removeTask,
     setActiveTask,
     setPausedTask,
-    tasklist: getTasklist
+    tasklist: getTasklist,
+    writeStateToLS,
+    readStateFromLS
   };
 }

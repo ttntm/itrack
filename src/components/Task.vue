@@ -1,7 +1,7 @@
 <template>
-  <div :class="{ 'active' : active, 'text-sm' : !active }" class="flex items-center justify-between rounded shadow px-8 py-6 mb-4">
+  <div :class="{ 'active' : active, 'text-sm' : !active }" class="task-item px-8 py-6 mb-4">
     <p :class="{ 'font-bold' : active }" class="flex-grow">{{ task.name }}</p>
-    <p class="ml-4">{{ timeSpent }}</p>
+    <p class="ml-8 mr-4">{{ timeSpent }}</p>
     <div class="relative px-8">
       <transition-group name="buttons">
         <BtnStart v-if="!active" btnTitle="Start Tracking" @click="startTracking" />
@@ -83,9 +83,21 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+  .task-item {
+    @apply flex items-center justify-between rounded shadow border border-transparent;
+  }
+
+  .task-item:hover {
+    @apply bg-white;
+  }
+
   .active {
-    @apply shadow-lg border-l-4 border-teal-500;
+    @apply bg-white shadow-lg border-gray-mid;
     transform: scale(1.05);
+  }
+
+  .task-item.active:hover {
+    @apply border-secondary-light;
   }
 
   .buttons-enter-active,
@@ -96,7 +108,5 @@ export default {
   .buttons-enter-from,
   .buttons-leave-to {
     opacity: 0;
-    transform: translateY(16px);
-    transform: translateX(-16px);
   }
 </style>

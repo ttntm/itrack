@@ -12,10 +12,10 @@ export default {
 
 <style lang="postcss" scoped>
   .btn-default {
-    @apply bg-teal-500 text-gray-200 border border-transparent shadow px-8 py-2
+    @apply bg-secondary-light text-primary-light border border-transparent shadow px-8 py-2
   }
 
   .btn-default:hover {
-    @apply bg-transparent text-teal-500 border-teal-500 shadow-none;
+    @apply bg-primary-light text-secondary-light border-primary-light shadow-none;
   }
 </style>

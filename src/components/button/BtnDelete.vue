@@ -19,10 +19,10 @@ export default {
 
 <style lang="postcss" scoped>
   .btn-delete {
-    @apply text-gray-400 w-8 h-8;
+    @apply flex-shrink-0 text-gray-mid rounded-full w-8 h-8;
   }
 
   .btn-delete:hover {
-    @apply text-gray-700 bg-red-400;
+    @apply text-gray-dark bg-gray-mid;
   }
 </style>

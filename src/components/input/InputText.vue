@@ -3,7 +3,7 @@
     :value="modelValue"
     class="input-task"
     type="text"
-    placeholder="Do something..."
+    placeholder="Fancy task name..."
     v-focus="true"
     @input="$emit('update:modelValue', $event.target.value)"
   >
@@ -30,14 +30,14 @@ export default {
 
 <style lang="postcss" scoped>
   .input-task {
-    @apply border-b-2 border-teal-500 rounded px-3 py-2;
+    @apply bg-transparent border-b-2 border-gray-mid rounded-lg px-3 py-2;
   }
 
   .input-task:hover {
-    @apply bg-gray-100;
+    @apply bg-white border-secondary-light;
   }
 
   .input-task:focus {
-    @apply outline-none shadow-outline;
+    @apply border-secondary-light outline-none shadow-outline;
   }
 </style>

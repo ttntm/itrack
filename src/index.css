@@ -20,12 +20,20 @@
     transition: all .35s ease;
   }
 
+  body {
+    @apply bg-gray-light text-secondary-light;
+  }
+
   .icon {
     @apply pointer-events-none;
   }
 
+  button:disabled {
+    @apply cursor-not-allowed;
+  }
+
   .btn {
-    @apply flex items-center justify-center rounded-full;
+    @apply flex items-center justify-center rounded-lg uppercase font-bold;
   }
 
   .btn:focus {
@@ -33,14 +41,14 @@
   }
 
   .btn-control {
-    @apply absolute text-gray-600 shadow w-8 h-8;
+    @apply absolute text-primary-light bg-secondary-light rounded-full shadow w-8 h-8;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 
   .btn-control:hover {
-    @apply text-gray-200 bg-teal-500;
+    @apply text-secondary-light bg-primary-light;
   }
 
 @tailwind utilities;

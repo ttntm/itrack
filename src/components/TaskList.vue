@@ -1,13 +1,17 @@
 <template>
+  <section class="tasklist-header mb-8">
+    <h1 class="font-bold text-2xl uppercase">Task List</h1>
+    <BtnSave v-if="tasklist.length > 0" />
+  </section>
   <section class="tasklist">
     <transition-group name="list">
       <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="updateTotal($event)" @update:total="updateTotal" />
     </transition-group>
   </section>
   <section v-if="tasklist.length > 0 || total > 0" class="my-8">
-    <p class="text-center text-lg font-bold tracking-wider text-gray-500">Total across all tasks: {{ totalDisplay }}</p>
+    <p class="text-center text-lg font-bold tracking-wider text-gray-dark">Time spent on listed tasks: {{ totalDisplay }}</p>
   </section>
-  <section class="new-task mt-8">
+  <section class="new-task mt-8 mb-16">
     <InputText v-model="newTask.name" class="flex-grow mr-12" @keyup.enter="createNewTask" />
     <BtnDefault @click="createNewTask">
       Add Task
@@ -17,6 +21,7 @@
 
 <script>
 import BtnDefault from './button/BtnDefault.vue';
+import BtnSave from './button/BtnSave.vue';
 import InputText from './input/InputText.vue'
 import Task from './Task.vue';
 
@@ -28,6 +33,7 @@ export default {
   name: 'TaskList',
   components: {
     BtnDefault,
+    BtnSave,
     InputText,
     Task
   },
@@ -78,13 +84,17 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+  .tasklist-header {
+    @apply flex items-center justify-between;
+  }
+
   .new-task {
     @apply flex items-center justify-between;
   }
 
   .list-enter-active,
   .list-leave-active {
-    transition: all 1s ease;
+    transition: all 0.75s ease;
   }
 
   .list-enter-from,
