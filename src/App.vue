@@ -1,5 +1,6 @@
 <template>
-  <img class="mx-auto" alt="Vue logo" src="./assets/logo.png" />
+  <!-- <img class="mx-auto" alt="itrack.work logo" src="./assets/logo.png" /> -->
+  <h1 class="font-bold text-2xl text-center my-8">itrack.work</h1>
   <TaskList />
 </template>
 

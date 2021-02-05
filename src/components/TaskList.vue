@@ -1,18 +1,22 @@
 <template>
   <section class="tasklist">
-    <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="updateTotal($event)" @update:total="updateTotal" />
+    <transition-group name="list">
+      <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="updateTotal($event)" @update:total="updateTotal" />
+    </transition-group>
   </section>
-  <section v-if="tasklist.length > 0 || total > 0" class="my-6">
-    <p class="text-center text-gray-600">Total: {{ totalDisplay }}</p>
+  <section v-if="tasklist.length > 0 || total > 0" class="my-8">
+    <p class="text-center text-lg font-bold tracking-wider text-gray-500">Total across all tasks: {{ totalDisplay }}</p>
   </section>
-  <section class="new-task mt-6">
-    <InputText v-model="newTask.name" @keyup.enter="createNewTask" />
-    <BtnCreateTask @click="createNewTask" />
+  <section class="new-task mt-8">
+    <InputText v-model="newTask.name" class="flex-grow mr-12" @keyup.enter="createNewTask" />
+    <BtnDefault @click="createNewTask">
+      Add Task
+    </BtnDefault>
   </section>
 </template>
 
 <script>
-import BtnCreateTask from './button/BtnCreateTask.vue';
+import BtnDefault from './button/BtnDefault.vue';
 import InputText from './input/InputText.vue'
 import Task from './Task.vue';
 
@@ -23,7 +27,7 @@ import { formatTime } from '../utils.js'
 export default {
   name: 'TaskList',
   components: {
-    BtnCreateTask,
+    BtnDefault,
     InputText,
     Task
   },
@@ -75,6 +79,17 @@ export default {
 
 <style lang="postcss" scoped>
   .new-task {
-    @apply flex justify-around;
+    @apply flex items-center justify-between;
+  }
+
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 1s ease;
+  }
+
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
   }
 </style>

@@ -20,4 +20,27 @@
     transition: all .35s ease;
   }
 
+  .icon {
+    @apply pointer-events-none;
+  }
+
+  .btn {
+    @apply flex items-center justify-center rounded-full;
+  }
+
+  .btn:focus {
+    @apply outline-none shadow-outline;
+  }
+
+  .btn-control {
+    @apply absolute text-gray-600 shadow w-8 h-8;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .btn-control:hover {
+    @apply text-gray-200 bg-teal-500;
+  }
+
 @tailwind utilities;

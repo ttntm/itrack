@@ -1,22 +1,33 @@
 <template>
-  <div class="flex items-center justify-between rounded shadow p-4 mb-4">
-    <p class="flex-grow">{{ task.name }}</p>
-    <div class="flex mr-8">
-      <p class="mr-4">{{ timeSpent }}</p>
-      <button v-if="!active" title="Start Tracking" @click="startTracking">[+]</button>
-      <button v-else title="Pause Tracking" @click="pauseTracking">[~]</button>
+  <div :class="{ 'active' : active, 'text-sm' : !active }" class="flex items-center justify-between rounded shadow px-8 py-6 mb-4">
+    <p :class="{ 'font-bold' : active }" class="flex-grow">{{ task.name }}</p>
+    <p class="ml-4">{{ timeSpent }}</p>
+    <div class="relative px-8">
+      <transition-group name="buttons">
+        <BtnStart v-if="!active" btnTitle="Start Tracking" @click="startTracking" />
+        <BtnPause v-else :active="active" btnTitle="Pause Tracking" @click="pauseTracking" />
+      </transition-group>
     </div>
-    <button @click="deleteTaskFromList(task)">&times;</button>
+    <BtnDelete btnTitle="Delete Task" @click="deleteTaskFromList(task)" />
   </div>
 </template>
 
 <script>
+import BtnDelete from './button/BtnDelete.vue';
+import BtnPause from './button/BtnPause.vue';
+import BtnStart from './button/BtnStart.vue';
+
 import { computed, ref, watch } from 'vue';
 import { useStore } from '../store.js';
 import { formatTime } from '../utils.js'
 
 export default {
   name: 'Task',
+  components: {
+    BtnDelete,
+    BtnPause,
+    BtnStart
+  },
   props: {
     task: Object
   },
@@ -71,6 +82,21 @@ export default {
 }
 </script>
 
-<style>
+<style lang="postcss" scoped>
+  .active {
+    @apply shadow-lg border-l-4 border-teal-500;
+    transform: scale(1.05);
+  }
 
+  .buttons-enter-active,
+  .buttons-leave-active {
+    transition: all .5s ease;
+  }
+
+  .buttons-enter-from,
+  .buttons-leave-to {
+    opacity: 0;
+    transform: translateY(16px);
+    transform: translateX(-16px);
+  }
 </style>
