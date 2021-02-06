@@ -4,7 +4,7 @@ const ls = window.localStorage;
 
 // keep the state object private so that we can have shared state across components!
 const state = reactive({
-  appTheme: '',
+  appTheme: 'light',
   tasklist: []
 });
 
