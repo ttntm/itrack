@@ -141,6 +141,7 @@ module.exports = {
     },
     fontFamily: {
       sans: [
+        'Rubik',
         'sans-serif',
         '"Apple Color Emoji"',
         '"Segoe UI Emoji"',

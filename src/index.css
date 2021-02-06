@@ -68,6 +68,7 @@
   }
 
   body {
+    @apply font-sans;
     background-color: var(--bgColor);
     color: var(--bodyText);
   }

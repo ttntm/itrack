@@ -9,7 +9,7 @@
     </transition-group>
   </section>
   <section v-if="tasklist.length > 0 || total > 0" class="my-8">
-    <p class="text-center text-lg font-bold tracking-wider text-gray-dark">Time spent on listed tasks: {{ totalDisplay }}</p>
+    <p class="text-center text-xl font-bold tracking-wide text-gray-dark">All Tasks: {{ totalDisplay }}</p>
   </section>
   <section class="new-task mt-8 mb-16">
     <InputText v-model="newTask.name" class="flex-grow mb-4 md:mb-0 md:mr-12" @keyup.enter="createNewTask" />
