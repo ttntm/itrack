@@ -30,14 +30,18 @@ export default {
 
 <style lang="postcss" scoped>
   .input-task {
-    @apply bg-transparent border-b-2 border-gray-mid rounded-lg px-3 py-2;
+    @apply border-b-2 rounded-lg px-3 py-2;
+    background-color: var(--inputColor);
+    border-color: var(--inputBorder);
   }
 
   .input-task:hover {
-    @apply bg-white border-secondary-light;
+    background-color: var(--inputHoverColor);
+    border-color: var(--inputHoverBorder);
   }
 
   .input-task:focus {
-    @apply border-secondary-light outline-none shadow-outline;
+    @apply outline-none shadow-outline;
+    border-color: var(--inputHoverBorder);
   }
 </style>

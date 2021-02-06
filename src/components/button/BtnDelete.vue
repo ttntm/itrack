@@ -23,6 +23,6 @@ export default {
   }
 
   .btn-delete:hover {
-    @apply text-gray-dark bg-gray-mid;
+    @apply text-secondary bg-gray-mid;
   }
 </style>

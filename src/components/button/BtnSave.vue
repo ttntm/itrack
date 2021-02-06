@@ -1,5 +1,5 @@
 <template>
-  <button class="flex items-center text-xs text-gray-mid hover:text-gray-dark focus:shadow-outline" ref="btnSave" title="Save task list" @click="saveCurrentList" :disabled="!btnState.enabled">
+  <button class="flex items-center text-xs text-gray-mid hover:text-gray-dark focus:shadow-outline" ref="btnSave" title="Save Task List Template to LocalStorage" @click="saveCurrentList" :disabled="!btnState.enabled">
     <transition-group name="inner">
       <span v-if="btnState.text" v-html="btnState.text" class="text-gray-dark" />
       <svg v-else xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

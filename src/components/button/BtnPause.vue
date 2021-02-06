@@ -20,10 +20,10 @@ export default {
 
 <style lang="postcss" scoped>
   .control-active {
-    @apply text-secondary-light bg-primary-light;
+    @apply text-secondary bg-primary;
   }
 
   .control-active:hover {
-    @apply text-primary-light bg-secondary-light;
+    @apply text-primary bg-secondary;
   }
 </style>

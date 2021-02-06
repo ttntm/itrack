@@ -1,14 +1,17 @@
 <template>
   <div :class="{ 'active' : active, 'text-sm' : !active }" class="task-item px-8 py-6 mb-4">
     <p :class="{ 'font-bold' : active }" class="flex-grow">{{ task.name }}</p>
-    <p class="ml-8 mr-4">{{ timeSpent }}</p>
-    <div class="relative px-8">
-      <transition-group name="buttons">
-        <BtnStart v-if="!active" btnTitle="Start Tracking" @click="startTracking" />
-        <BtnPause v-else :active="active" btnTitle="Pause Tracking" @click="pauseTracking" />
-      </transition-group>
+    <div class="separator h-px  md:hidden my-4" />
+    <div class="flex items-center justify-between">
+      <p class="text-center md:text-left md:ml-8 md:mr-4">{{ timeSpent }}</p>
+      <div class="relative md:px-8">
+        <transition-group name="buttons">
+          <BtnStart v-if="!active" btnTitle="Start Tracking" @click="startTracking" />
+          <BtnPause v-else :active="active" btnTitle="Pause Tracking" @click="pauseTracking" />
+        </transition-group>
+      </div>
+      <BtnDelete btnTitle="Delete Task" @click="deleteTaskFromList(task)" />
     </div>
-    <BtnDelete btnTitle="Delete Task" @click="deleteTaskFromList(task)" />
   </div>
 </template>
 
@@ -44,6 +47,7 @@ export default {
     const deleteTaskFromList = (current) => {
       if (taskTotal.value > 0) {
         if(confirm('Do you really want to remove this task and the time spent on it?')) {
+          clearInterval(increment);
           removeTask(current);
           emit('reduce:total', taskTotal.value);
         } else { return }
@@ -84,20 +88,36 @@ export default {
 
 <style lang="postcss" scoped>
   .task-item {
-    @apply flex items-center justify-between rounded shadow border border-transparent;
+    @apply flex flex-col rounded shadow border;
+    background-color: var(--taskCard);
+    color: var(--taskText);
+    border-color: var(--taskCardBorder);
+  }
+
+  @media(min-width: 768px) {
+    .task-item {
+      @apply flex-row items-center justify-between;
+    }
   }
 
   .task-item:hover {
-    @apply bg-white;
+    background-color: var(--taskCardHover);
+    border-color: var(--taskCardHoverBorder);
   }
 
   .active {
-    @apply bg-white shadow-lg border-gray-mid;
+    @apply shadow-lg;
+    background-color: var(--taskCardActive);
+    border-color: var(--taskCardActiveBorder);
     transform: scale(1.05);
   }
 
   .task-item.active:hover {
-    @apply border-secondary-light;
+    border-color: var(--taskCardActiveHoverBorder);
+  }
+
+  .separator {
+    background-color: var(--taskCardActiveBorder);
   }
 
   .buttons-enter-active,

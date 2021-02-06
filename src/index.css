@@ -1,3 +1,50 @@
+:root {
+  --primary: #55FBFF;
+  --secondary: #012B48;
+  --gray-light: #F6F6F6;
+  --gray-mid: #C5CADC;
+  --gray-dark: #959EBB;
+  --bodyText: var(--secondary);
+  --bgColor: var(--gray-light);
+  --buttonColor: var(--secondary);
+  --buttonText: var(--primary);
+  --buttonHoverColor: var(--primary);
+  --buttonHoverText: var(--secondary);
+  --inputColor: transparent;
+  --inputBorder: var(--gray-mid);
+  --inputHoverBorder: var(--secondary);
+  --inputHoverColor: #fff;
+  --taskCard: transparent;
+  --taskText: inherit;
+  --taskCardBorder: transparent;
+  --taskCardHover: #fff;
+  --taskCardHoverBorder: transparent;
+  --taskCardActive: var(--taskCardHover);
+  --taskCardActiveBorder: var(--gray-mid);
+  --taskCardActiveHoverBorder: var(--secondary);
+}
+
+[data-theme="dark"] {
+  --primary: #30EAEE;
+  --secondary: #140E24;
+  --bodyText: var(--gray-mid);
+  --bgColor: var(--secondary);
+  --buttonColor: var(--primary);
+  --buttonText: var(--secondary);
+  --buttonHoverColor: var(--secondary);
+  --buttonHoverText: var(--primary);
+  --inputBorder: var(--gray-dark);
+  --inputHoverBorder: var(--primary);
+  --inputHoverColor: transparent;
+  --taskText: var(--gray-light);
+  --taskCardBorder: #000;
+  --taskCardHover: transparent;
+  --taskCardHoverBorder: var(--gray-dark);
+  --taskCardActive: transparent;
+  --taskCardActiveBorder: var(--gray-dark);
+  --taskCardActiveHoverBorder: var(--primary);
+}
+
 @tailwind base;
 
 @tailwind components;
@@ -21,7 +68,8 @@
   }
 
   body {
-    @apply bg-gray-light text-secondary-light;
+    background-color: var(--bgColor);
+    color: var(--bodyText);
   }
 
   .icon {
@@ -41,14 +89,22 @@
   }
 
   .btn-control {
-    @apply absolute text-primary-light bg-secondary-light rounded-full shadow w-8 h-8;
+    @apply absolute border border-transparent rounded-full shadow w-8 h-8;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: var(--buttonColor);
+    color: var(--buttonText);
   }
 
   .btn-control:hover {
-    @apply text-secondary-light bg-primary-light;
+    background-color: var(--buttonHoverColor);
+    color: var(--buttonHoverText);
+    border-color: var(--buttonHoverText);
+  }
+
+  footer a:hover {
+    text-decoration: underline;
   }
 
 @tailwind utilities;

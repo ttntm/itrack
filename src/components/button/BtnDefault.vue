@@ -12,10 +12,15 @@ export default {
 
 <style lang="postcss" scoped>
   .btn-default {
-    @apply bg-secondary-light text-primary-light border border-transparent shadow px-8 py-2
+    @apply border border-transparent shadow px-8 py-2;
+    background-color: var(--buttonColor);
+    color: var(--buttonText);
   }
 
   .btn-default:hover {
-    @apply bg-primary-light text-secondary-light border-primary-light shadow-none;
+    @apply shadow-none;
+    background-color: var(--buttonHoverColor);
+    color: var(--buttonHoverText);
+    border-color: var(--buttonHoverText);
   }
 </style>

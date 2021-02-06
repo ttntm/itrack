@@ -18,19 +18,13 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
       black: '#000',
       white: '#fff',
-
-      'gray-light': '#F6F6F6',
-      'gray-mid': '#C5CADC',
-      'gray-dark': '#959EBB',
-      // AQUA
-      'primary-light': '#55FBFF',
-      'primary-dark': '#30EAEE',
-      // DARK BLUE
-      'secondary-light': '#012B48',
-      'secondary-dark': '#140E24',
+      'gray-light': 'var(--gray-light)',
+      'gray-mid': 'var(--gray-mid)',
+      'gray-dark': 'var(--gray-dark)',
+      'primary': 'var(--primary)',
+      'secondary': 'var(--secondary)',
     },
     spacing: {
       px: '1px',

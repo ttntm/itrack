@@ -3,7 +3,7 @@
     <h1 class="font-bold text-2xl uppercase">Task List</h1>
     <BtnSave v-if="tasklist.length > 0" />
   </section>
-  <section class="tasklist">
+  <section v-if="tasklist.length > 0" class="tasklist">
     <transition-group name="list">
       <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="updateTotal($event)" @update:total="updateTotal" />
     </transition-group>
@@ -12,7 +12,7 @@
     <p class="text-center text-lg font-bold tracking-wider text-gray-dark">Time spent on listed tasks: {{ totalDisplay }}</p>
   </section>
   <section class="new-task mt-8 mb-16">
-    <InputText v-model="newTask.name" class="flex-grow mr-12" @keyup.enter="createNewTask" />
+    <InputText v-model="newTask.name" class="flex-grow mb-4 md:mb-0 md:mr-12" @keyup.enter="createNewTask" />
     <BtnDefault @click="createNewTask">
       Add Task
     </BtnDefault>
@@ -89,7 +89,13 @@ export default {
   }
 
   .new-task {
-    @apply flex items-center justify-between;
+    @apply flex flex-col;
+  }
+
+  @media(min-width: 768px) {
+    .new-task {
+      @apply flex-row items-center justify-between;
+    }
   }
 
   .list-enter-active,
