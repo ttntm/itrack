@@ -1,5 +1,5 @@
 <template>
-  <img class="w-64 mx-auto my-8 md:my-12" alt="itrack.work logo" :src="logoSrc" />
+  <img class="w-64 mx-auto my-8 md:my-12" alt="aitrack.work logo" :src="logoSrc" />
   <BtnSwitchTheme />
   <p class="text-lg tracking-wide text-gray-dark text-center my-8 md:my-12">A simple tracker for time spent on various tasks.</p>
   <TaskList />
