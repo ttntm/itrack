@@ -1,5 +1,5 @@
-https://itrack.netlify.app/* https://itrack.work/:splat 301!
-https://main--itrack.netlify.app/* https://itrack.work/:splat 301!
+https://aitrack.netlify.app/* https://aitrack.work/:splat 301!
+https://main--aitrack.netlify.app/* https://aitrack.work/:splat 301!
 
 # SPA
 /*  /index.html 200
