@@ -3,14 +3,16 @@
     <p :class="{ 'font-bold' : active }" class="flex-grow">{{ task.name }}</p>
     <div class="separator h-px  md:hidden my-4" />
     <div class="flex items-center justify-between">
-      <p class="text-center md:text-left md:ml-8 md:mr-4">{{ timeSpent }}</p>
-      <div class="relative md:px-8">
+      <p class="w-1/3 md:ml-8 md:mr-4">{{ timeSpent }}</p>
+      <div class="w-1/3 relative md:px-8">
         <transition-group name="buttons">
           <BtnStart v-if="!active" btnTitle="Start Tracking" @click="startTracking" />
           <BtnPause v-else :active="active" btnTitle="Pause Tracking" @click="pauseTracking" />
         </transition-group>
       </div>
-      <BtnDelete btnTitle="Delete Task" @click="deleteTaskFromList(task)" />
+      <div class="w-1/3">
+        <BtnDelete class="ml-auto" btnTitle="Delete Task" @click="deleteTaskFromList(task)" />
+      </div>
     </div>
   </div>
 </template>
