@@ -42,6 +42,7 @@ export default {
 
   .input-task:focus {
     @apply outline-none shadow-outline;
+    background-color: var(--inputHoverColor);
     border-color: var(--inputHoverBorder);
   }
 </style>
