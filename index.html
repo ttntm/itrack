@@ -17,11 +17,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body class="flex flex-col items-stretch min-h-screen">
-  <main id="app" class="w-full flex-grow lg:w-2/3 xl:w-1/2 px-8 sm:px-12 lg:px-0 mx-auto"></main>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <main id="app" class="w-full flex-grow lg:w-2/3 xl:w-1/2 px-8 sm:px-12 lg:px-0 mx-auto" style="opacity: 0;"></main>
   <footer class="flex-shrink-0 text-xs text-center text-gray-dark pb-8">
     <p class="mb-2">Made by <a href="https://ttntm.me" target="_blank" rel="noopener">ttntm</a>, designed by <a href="https://sahar.design" target="_blank" rel="noopener">Sahar Heumesser</a>, inspired by <a href="https://github.com/abisxir" target="_blank" rel="noopener">abisxir</a>.</p>
     <p>&copy; aitrack.work</p>
   </footer>
   <script type="module" src="/src/main.js"></script>
+  <style>
+    html {
+      font-family: sans-serif;
+    }
+  </style>
 </body>
 </html>

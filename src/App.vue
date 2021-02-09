@@ -27,6 +27,9 @@ export default {
     });
 
     onMounted(() => {
+      const app = document.getElementById('app');
+      app.style.opacity = '1';
+      app.style.transition = 'opacity 1.5s ease';
       setTimeout(readStateFromLS(['appTheme', 'tasklist']), 50);
       setTimeout(applyTheme(appTheme.value), 150);
     })
