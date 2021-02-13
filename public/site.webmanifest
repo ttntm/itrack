@@ -13,8 +13,8 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#012B48",
-  "background_color": "#012B48",
+  "theme_color": "#1c1c1c",
+  "background_color": "#1c1c1c",
   "display": "standalone",
   "start_url": "https://aitrack.work"
 }
