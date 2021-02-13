@@ -17,13 +17,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-  .control-active {
-    @apply text-secondary bg-primary;
-  }
-
-  .control-active:hover {
-    @apply text-primary bg-secondary;
-  }
-</style>

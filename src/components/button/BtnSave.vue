@@ -48,16 +48,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-  .inner-enter-active,
-  .inner-leave-active {
-    transition: all .5s ease;
-  }
-
-  .inner-enter-from,
-  .inner-leave-to {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-</style>

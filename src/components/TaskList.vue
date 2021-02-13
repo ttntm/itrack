@@ -82,30 +82,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-  .tasklist-header {
-    @apply flex items-center justify-between;
-  }
-
-  .new-task {
-    @apply flex flex-col;
-  }
-
-  @media(min-width: 768px) {
-    .new-task {
-      @apply flex-row items-center justify-between;
-    }
-  }
-
-  .list-enter-active,
-  .list-leave-active {
-    transition: all 0.75s ease;
-  }
-
-  .list-enter-from,
-  .list-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-</style>

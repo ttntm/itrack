@@ -19,6 +19,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="canonical" href="https://aitrack.work">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    'serviceWorker' in navigator && window.addEventListener('load', navigator.serviceWorker.register('/service-worker.js'));
+  </script>
   <style>
     html {font-family: sans-serif;}
   </style>
@@ -29,7 +32,7 @@
   </noscript>
   <main id="app" class="w-full flex-grow lg:w-2/3 xl:w-1/2 px-8 sm:px-12 lg:px-0 mx-auto" style="opacity: 0;"></main>
   <footer class="flex-shrink-0 text-xs text-center text-gray-dark pb-8">
-    <p class="mb-2">Made by <a href="https://ttntm.me" target="_blank" rel="noopener">ttntm</a>, designed by <a href="https://sahar.design" target="_blank" rel="noopener">Sahar Heumesser</a>, inspired by <a href="https://github.com/abisxir" target="_blank" rel="noopener">abisxir</a>.</p>
+    <p class="mb-2">Made by <a href="https://ttntm.me" target="_blank" rel="noopener">ttntm</a>, designed by <a href="https://sahar.design" target="_blank" rel="noopener">Sahar</a>, inspired by <a href="https://github.com/abisxir" target="_blank" rel="noopener">abisxir</a>.</p>
     <p>&copy; aitrack.work</p>
   </footer>
   <script type="module" src="/src/main.js"></script>

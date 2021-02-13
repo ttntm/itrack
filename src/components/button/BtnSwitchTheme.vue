@@ -44,23 +44,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-  .btn-theme-switch {
-    @apply flex items-center justify-center rounded-full text-gray-mid w-8 h-8 mx-auto;
-  }
-
-  @media(min-width: 768px) {
-    .btn-theme-switch {
-      @apply absolute top-0 right-0 m-8;
-    }
-  }
-
-  .btn-theme-switch:hover {
-    @apply text-gray-dark;
-  }
-
-  .btn-theme-switch:focus {
-    @apply shadow-outline;
-  }
-</style>

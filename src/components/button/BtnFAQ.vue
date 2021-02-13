@@ -14,7 +14,3 @@ export default {
   name: 'BtnFAQ'
 }
 </script>
-
-<style>
-
-</style>

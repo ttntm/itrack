@@ -16,13 +16,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-  .btn-delete {
-    @apply flex-shrink-0 text-gray-mid rounded-full w-8 h-8;
-  }
-
-  .btn-delete:hover {
-    @apply text-secondary bg-gray-mid;
-  }
-</style>

@@ -73,6 +73,11 @@
     color: var(--bodyText);
   }
 
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* BUTTONS -------------------------------------------------------------------------------- */
   .icon {
     @apply pointer-events-none;
   }
@@ -89,6 +94,28 @@
     @apply outline-none shadow-outline;
   }
 
+  .btn-default {
+    @apply border border-transparent shadow px-8 py-2;
+    background-color: var(--buttonColor);
+    color: var(--buttonText);
+  }
+
+  .btn-default:hover {
+    @apply shadow-none;
+    background-color: var(--buttonHoverColor);
+    color: var(--buttonHoverText);
+    border-color: var(--buttonHoverText);
+  }
+
+  .btn-delete {
+    @apply flex-shrink-0 text-gray-mid rounded-full w-8 h-8;
+  }
+
+  .btn-delete:hover {
+    @apply text-secondary bg-gray-mid;
+  }
+
+  /* BTN CONTROLS -------------------------------------------------------------------------------- */
   .btn-control {
     @apply absolute border border-transparent rounded-full shadow w-8 h-8;
     top: 50%;
@@ -104,8 +131,131 @@
     border-color: var(--buttonHoverText);
   }
 
-  footer a:hover {
-    text-decoration: underline;
+  .control-active {
+    @apply text-secondary bg-primary;
+  }
+
+  .control-active:hover {
+    @apply text-primary bg-secondary;
+  }
+
+  /* BTN THEME SWITCH -------------------------------------------------------------------------------- */
+  .btn-theme-switch {
+    @apply flex items-center justify-center rounded-full text-gray-mid w-8 h-8 mx-auto;
+  }
+
+  @media(min-width: 768px) {
+    .btn-theme-switch {
+      @apply absolute top-0 right-0 m-8;
+    }
+  }
+
+  .btn-theme-switch:hover {
+    @apply text-gray-dark;
+  }
+
+  .btn-theme-switch:focus {
+    @apply shadow-outline;
+  }
+
+  /* BTN SAVE -------------------------------------------------------------------------------- */
+  .inner-enter-active,
+  .inner-leave-active {
+    transition: all .5s ease;
+  }
+
+  .inner-enter-from,
+  .inner-leave-to {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  /* INPUT TEXT -------------------------------------------------------------------------------- */
+  .input-task {
+    @apply border-b-2 rounded-lg px-3 py-2;
+    background-color: var(--inputColor);
+    border-color: var(--inputBorder);
+  }
+
+  .input-task:hover {
+    background-color: var(--inputHoverColor);
+    border-color: var(--inputHoverBorder);
+  }
+
+  .input-task:focus {
+    @apply outline-none shadow-outline;
+    background-color: var(--inputHoverColor);
+    border-color: var(--inputHoverBorder);
+  }
+
+  /* TASKLIST -------------------------------------------------------------------------------- */
+  .tasklist-header {
+    @apply flex items-center justify-between;
+  }
+
+  .new-task {
+    @apply flex flex-col;
+  }
+
+  @media(min-width: 768px) {
+    .new-task {
+      @apply flex-row items-center justify-between;
+    }
+  }
+
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.75s ease;
+  }
+
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /* TASK ITEMS -------------------------------------------------------------------------------- */
+  .task-item {
+    @apply flex flex-col rounded shadow border;
+    background-color: var(--taskCard);
+    color: var(--taskText);
+    border-color: var(--taskCardBorder);
+  }
+
+  @media(min-width: 768px) {
+    .task-item {
+      @apply flex-row items-center justify-between;
+    }
+  }
+
+  .task-item:hover {
+    background-color: var(--taskCardHover);
+    border-color: var(--taskCardHoverBorder);
+  }
+
+  .active {
+    @apply shadow-lg;
+    background-color: var(--taskCardActive);
+    border-color: var(--taskCardActiveBorder);
+    transform: scale(1.05);
+  }
+
+  .task-item.active:hover {
+    border-color: var(--taskCardActiveHoverBorder);
+  }
+
+  .separator {
+    background-color: var(--taskCardActiveBorder);
+  }
+
+  .buttons-enter-active,
+  .buttons-leave-active {
+    transition: all .5s ease;
+  }
+
+  .buttons-enter-from,
+  .buttons-leave-to {
+    opacity: 0;
   }
 
 @tailwind utilities;
