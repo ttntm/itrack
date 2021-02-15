@@ -1,8 +1,14 @@
-# aitrack.work
+<h2 align='center'>aitrack.work</h2>
 
-A minimal task-based time tracker.
-
-Built using Vue3 and [Vite.js](https://github.com/vitejs/vite), deployed via Netlify.
+<p align='center'>
+  <b>A minimal task-based time tracker.</b>
+  <br><br>
+  Built using Vue3 and <a href="https://github.com/vitejs/vite">Vite.js</a>, deployed via Netlify.
+  <br><br>
+  <a href="https://github.com/vitejs/awesome-vite">
+    <img src="https://awesome.re/mentioned-badge.svg" alt="Mentioned in Awesome Vite.js">
+  </a>
+</p>
 
 ## Run @ `localhost`
 
