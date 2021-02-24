@@ -248,13 +248,13 @@
     background-color: var(--taskCardActiveBorder);
   }
 
-  .buttons-enter-active,
-  .buttons-leave-active {
-    transition: all .5s ease;
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity .5s ease;
   }
 
-  .buttons-enter-from,
-  .buttons-leave-to {
+  .fade-enter-from,
+  .fade-leave-to {
     opacity: 0;
   }
 
