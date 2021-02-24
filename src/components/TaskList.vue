@@ -12,7 +12,7 @@
     <p class="text-center text-xl font-bold tracking-wide text-gray-dark">All Tasks: {{ totalDisplay }}</p>
   </section>
   <section class="new-task mt-8 mb-16">
-    <InputText v-model="newTask.name" class="flex-grow mb-4 md:mb-0 md:mr-12" @keyup.enter="createNewTask" />
+    <InputText v-model="newTask.name" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Fancy task name..." @keyup.enter="createNewTask" />
     <BtnDefault @click="createNewTask">
       Add Task
     </BtnDefault>
@@ -56,7 +56,7 @@ export default {
         addTask({ ...newTask });
 
         newTask.id = '';
-        newTask.name= '';
+        newTask.name = '';
       } else {
         alert('Please enter a task name!');
         return

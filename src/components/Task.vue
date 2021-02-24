@@ -1,6 +1,11 @@
 <template>
-  <div :class="{ 'active' : active, 'text-sm' : !active }" class="task-item px-8 py-6 mb-4">
-    <p :class="{ 'font-bold' : active }" class="flex-grow">{{ task.name }}</p>
+  <div :class="{ 'active' : active, 'text-sm' : !active }" class="task-item px-8 mb-4 py-6 lg:py-4">
+    <div class="task-name flex flex-grow items-center justify-start lg:py-2">
+      <BtnTaskEdit v-if="!editTask.editing" class="click-outside-ignore" @click="toggleEdit" />
+      <p v-if="!editTask.editing" :class="{ 'font-bold' : active }" class="flex-grow">{{ task.name }}</p>
+      <InputText v-if="editTask.editing" v-model="editTask.name" v-click-outside="toggleEdit" v-esc="toggleEdit" class="input-task flex-grow px-2 py-1" @keyup.enter="updateTask" />
+      <BtnTaskEditSave v-if="editTask.editing" class="ml-2 click-outside-ignore" @click="updateTask" />
+    </div>
     <div class="separator h-px  md:hidden my-4" />
     <div class="flex items-center justify-between">
       <p class="w-1/3 md:ml-8 md:mr-4">{{ timeSpent }}</p>
@@ -21,8 +26,11 @@
 import BtnDelete from './button/BtnDelete.vue';
 import BtnPause from './button/BtnPause.vue';
 import BtnStart from './button/BtnStart.vue';
+import BtnTaskEdit from './button/BtnTaskEdit.vue';
+import BtnTaskEditSave from './button/BtnTaskEditSave.vue';
+import InputText from './input/InputText.vue';
 
-import { computed, ref, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { useStore } from '../store.js';
 import { formatTime } from '../utils.js'
 
@@ -31,16 +39,23 @@ export default {
   components: {
     BtnDelete,
     BtnPause,
-    BtnStart
+    BtnStart,
+    BtnTaskEdit,
+    BtnTaskEditSave,
+    InputText
   },
   props: {
     task: Object
   },
   emits: ['reduce:total','update:total'],
   setup(props, { emit }) {
-    const { removeTask, setActiveTask, setPausedTask } = useStore();
+    const { editTaskName, removeTask, setActiveTask, setPausedTask } = useStore();
 
     const active = computed(() => props.task.taskActive);
+    const editTask = reactive({
+      editing: false,
+      name: ''
+    });
     const taskTotal = ref(0);
     const timeSpent = computed(() => { return formatTime(taskTotal.value) });
 
@@ -58,12 +73,23 @@ export default {
       }
     }
 
-    const startTracking = () => {
-      setActiveTask(props.task.id);
+    const toggleEdit = () => {
+      editTask.editing = !editTask.editing;
+      return editTask.editing ? editTask.name = props.task.name : ''
     }
 
-    const pauseTracking = () => {
-      setPausedTask(props.task.id);
+    const startTracking = () => { setActiveTask(props.task.id); }
+
+    const pauseTracking = () => { setPausedTask(props.task.id); }
+
+    const updateTask = () => {
+      if (editTask.name) {
+        editTaskName(props.task.id, editTask.name);
+        toggleEdit();
+      } else {
+        alert('Please enter a task name!');
+        return
+      }
     }
 
     watch(active, () => {
@@ -79,10 +105,13 @@ export default {
 
     return {
       active,
+      toggleEdit,
+      editTask,
       deleteTaskFromList,
       pauseTracking,
       startTracking,
-      timeSpent
+      timeSpent,
+      updateTask
     }
   }
 }

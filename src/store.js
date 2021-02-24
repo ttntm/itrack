@@ -14,8 +14,18 @@ export const useStore = () => {
   const getTasklist = computed(() => state.tasklist);
 
   //actions
-  const addTask = (task) => {
-    state.tasklist.push(task);
+  const addTask = (task) => { state.tasklist.push(task); }
+
+  const deactivateAll = () => {
+    state.tasklist.forEach(task => task.taskActive = false);
+  }
+
+  const editTaskName = (id, newName) => {
+    state.tasklist.forEach(task => {
+      if (task.id === id) {
+        task.name = newName;
+      }
+    });
   }
 
   const removeTask = (toRemove) => {
@@ -70,6 +80,8 @@ export const useStore = () => {
     appTheme: getAppTheme,
     tasklist: getTasklist,
     addTask,
+    deactivateAll,
+    editTaskName,
     removeTask,
     setActiveTask,
     setPausedTask,

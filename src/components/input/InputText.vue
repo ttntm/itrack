@@ -1,9 +1,8 @@
 <template>
   <input
     :value="modelValue"
-    class="input-task"
     type="text"
-    placeholder="Fancy task name..."
+    :placeholder="pch"
     v-focus="true"
     @input="$emit('update:modelValue', $event.target.value)"
   >
@@ -13,7 +12,8 @@
 export default {
   name: 'InputText',
   props: {
-    modelValue: String
+    modelValue: String,
+    pch: String
   },
   emits: ['update:modelValue'],
   directives: {

@@ -20,7 +20,7 @@ export default {
     TaskList
   },
   setup() {
-    const { appTheme, readStateFromLS } = useStore();
+    const { appTheme, deactivateAll, readStateFromLS } = useStore();
 
     const logoSrc = computed(() => {
       return appTheme.value !== 'dark' ? '/img/logo-light.svg' : '/img/logo-dark.svg';
@@ -31,6 +31,7 @@ export default {
       app.style.opacity = '1';
       app.style.transition = 'opacity 1.5s ease';
       setTimeout(readStateFromLS(['appTheme', 'tasklist']), 50);
+      setTimeout(deactivateAll(), 100); // just in case someone has saved the task list with a running task
       setTimeout(applyTheme(appTheme.value), 150);
     })
 

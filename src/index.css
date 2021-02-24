@@ -107,11 +107,11 @@
     border-color: var(--buttonHoverText);
   }
 
-  .btn-delete {
+  .btn-muted {
     @apply flex-shrink-0 text-gray-mid rounded-full w-8 h-8;
   }
 
-  .btn-delete:hover {
+  .btn-muted:hover {
     @apply text-secondary bg-gray-mid;
   }
 
@@ -256,6 +256,20 @@
   .buttons-enter-from,
   .buttons-leave-to {
     opacity: 0;
+  }
+
+  .btn-edit-enter {
+    @apply mr-2;
+  }
+
+  @media(min-width: 1024px) {
+    .btn-edit-enter {
+      @apply w-0 opacity-0 mr-0;
+      transition: width .5s ease-in-out, opacity .25s ease, margin .5s ease-in-out;
+    }
+    .task-name:hover .btn-edit-enter {
+      @apply w-8 opacity-100 mr-2;
+    }
   }
 
 @tailwind utilities;
