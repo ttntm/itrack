@@ -5,7 +5,7 @@
       <div class="flex flex-grow items-center justify-start relative">
         <transition-group name="fade">
           <p v-if="!editTask.editing" :class="{ 'font-bold' : active }" class="absolute w-full">{{ task.name }}</p>
-          <InputText v-if="editTask.editing" v-model="editTask.name" v-click-outside="toggleEdit" v-esc="toggleEdit" class="input-task absolute w-full px-2 py-1" @keyup.enter="updateTask" />
+          <InputText v-if="editTask.editing" v-model="editTask.name" v-click-outside="toggleEdit" v-esc="toggleEdit" class="input-task absolute w-full px-2 py-1" @keydown.enter="updateTask" />
         </transition-group>
       </div>
       <transition name="fade">

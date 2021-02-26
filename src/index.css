@@ -107,6 +107,10 @@
     border-color: var(--buttonHoverText);
   }
 
+  .btn-scale:active {
+    transform: scale(0.9);
+  }
+
   .btn-muted {
     @apply flex-shrink-0 text-gray-mid rounded-full w-8 h-8;
   }
@@ -155,7 +159,7 @@
   }
 
   .btn-theme-switch:focus {
-    @apply shadow-outline;
+    @apply outline-none shadow-outline;
   }
 
   /* BTN SAVE -------------------------------------------------------------------------------- */
@@ -267,7 +271,8 @@
       @apply w-0 opacity-0 mr-0;
       transition: width .5s ease-in-out, opacity .25s ease, margin .5s ease-in-out;
     }
-    .task-name:hover .btn-edit-enter {
+    .task-name:hover .btn-edit-enter,
+    .btn-edit-enter:focus {
       @apply w-8 opacity-100 mr-2;
     }
   }
