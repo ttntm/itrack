@@ -73,6 +73,29 @@
     color: var(--bodyText);
   }
 
+  /* scrollbar styles */
+
+  @media(min-width: 576px) {
+    body::-webkit-scrollbar-track
+    {
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      background-color: var(--bgColor);
+    }
+
+    body::-webkit-scrollbar
+    {
+      width: 6px;
+      background-color: var(--bgColor);
+    }
+
+    body::-webkit-scrollbar-thumb
+    {
+      background-color: var(--buttonColor);
+      border-radius: 99999px;
+    }
+  }
+
   footer a:hover {
     text-decoration: underline;
   }
