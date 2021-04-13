@@ -2,6 +2,12 @@ import { useStore } from './store.js';
 
 const { appTheme } = useStore();
 
+export const applyTheme = (theme) => {
+  if (appTheme.value) {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+}
+
 export const formatTime = (input) => {
   let hrs = input / 3600;
   hrs = hrs.toString().split('.')[0];
@@ -16,8 +22,15 @@ export const formatTime = (input) => {
     `${(min < 10 ? '0' : '') + min}:${(sec < 10 ? '0' : '') + sec}`;
 }
 
-export const applyTheme = (theme) => {
-  if (appTheme.value) {
-    document.documentElement.setAttribute('data-theme', theme);
-  }
+export const getDate = () => {
+  const date = new Date();
+
+  const dateOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+
+  return date.toLocaleDateString('en-US', dateOptions);
 }

@@ -1,24 +1,3 @@
-<template>
-  <section class="tasklist-header mb-8">
-    <h1 class="font-bold text-2xl uppercase">Task List</h1>
-    <BtnSave v-if="tasklist.length > 0" />
-  </section>
-  <section v-if="tasklist.length > 0" class="tasklist">
-    <transition-group name="list">
-      <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="updateTotal($event)" @update:total="updateTotal" />
-    </transition-group>
-  </section>
-  <section v-if="tasklist.length > 0 || total > 0" class="my-8">
-    <p class="text-center text-xl font-bold tracking-wide text-gray-dark">All Tasks: {{ totalDisplay }}</p>
-  </section>
-  <section class="new-task mt-8 mb-16">
-    <InputText v-model="newTask.name" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Fancy task name..." @keyup.enter="createNewTask" />
-    <BtnDefault @click="createNewTask">
-      Add Task
-    </BtnDefault>
-  </section>
-</template>
-
 <script>
 import BtnDefault from './button/BtnDefault.vue';
 import BtnSave from './button/BtnSave.vue';
@@ -27,7 +6,7 @@ import Task from './Task.vue';
 
 import { computed, reactive, ref } from 'vue';
 import { useStore } from '../store.js';
-import { formatTime } from '../utils.js'
+import { formatTime, getDate } from '../utils.js'
 
 export default {
   name: 'TaskList',
@@ -46,6 +25,7 @@ export default {
       taskActive: false
     });
 
+    const today = getDate();
     const total = ref(0);
     const totalDisplay = computed(() => { return formatTime(total.value) });
 
@@ -75,6 +55,7 @@ export default {
       createNewTask,
       tasklist,
       newTask,
+      today,
       total,
       totalDisplay,
       updateTotal
@@ -82,3 +63,31 @@ export default {
   }
 }
 </script>
+
+<template>
+  <section class="tasklist-header mb-8">
+    <h1 class="font-bold text-2xl uppercase">Task List</h1>
+    <transition name="fade">
+      <BtnSave v-if="tasklist.length > 0" />
+    </transition>
+    <transition name="fade">
+      <div v-if="tasklist.length > 0" class="w-full order-last text-center tracking-wide text-gray-dark text-sm mt-4">{{ today }}</div>
+    </transition>
+  </section>
+  <section v-if="tasklist.length > 0" class="tasklist">
+    <transition-group name="list">
+      <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="updateTotal($event)" @update:total="updateTotal" />
+    </transition-group>
+  </section>
+  <transition name="fade">
+    <section v-if="tasklist.length > 0 || total > 0" class="my-8">
+      <p class="text-center text-xl font-bold tracking-wide text-gray-dark">All Tasks: {{ totalDisplay }}</p>
+    </section>
+  </transition>
+  <section class="new-task mt-8 mb-16">
+    <InputText v-model="newTask.name" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="createNewTask" />
+    <BtnDefault @click="createNewTask">
+      Add Task
+    </BtnDefault>
+  </section>
+</template>

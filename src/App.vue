@@ -1,10 +1,3 @@
-<template>
-  <img class="w-64 mx-auto my-8 md:my-12" alt="aitrack.work logo" :src="logoSrc" />
-  <BtnSwitchTheme />
-  <p class="text-lg tracking-wide text-gray-dark text-center mt-8 mb-12 md:my-12">A simple task-based time tracker for everyday use.</p>
-  <TaskList />
-</template>
-
 <script>
 import BtnSwitchTheme from './components/button/BtnSwitchTheme.vue';
 import TaskList from './components/TaskList.vue';
@@ -42,3 +35,10 @@ export default {
   }
 }
 </script>
+
+<template>
+  <img class="w-64 mx-auto my-8 md:my-12" alt="aitrack.work logo" :src="logoSrc" />
+  <BtnSwitchTheme />
+  <p class="text-lg tracking-wide text-gray-dark text-center mt-8 mb-12 md:my-12">A simple task-based time tracker for everyday use.</p>
+  <TaskList />
+</template>
