@@ -23,9 +23,9 @@ export const formatTime = (input) => {
 }
 
 export const getDate = () => {
-  const date = new Date();
+  let date = new Date();
 
-  const dateOptions = {
+  let dateOptions = {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
