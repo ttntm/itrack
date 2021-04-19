@@ -29,8 +29,12 @@ export const useStore = () => {
   }
 
   const removeTask = (toRemove) => {
-    state.tasklist = state.tasklist.filter(task => task.id !== toRemove.id);
-    writeStateToLS('tasklist'); // remove tasks so they don't come back on reload
+    const filtered = (source) => source.filter(task => task.id !== toRemove.id);
+    let savedTasks = JSON.parse(ls.getItem('tasklist'));
+
+    state.tasklist = filtered(state.tasklist);
+
+    if (savedTasks.length > 0) writeStateToLS('tasklist', filtered(savedTasks)); // remove saved tasks so they don't come back on reload
   }
 
   const setActiveTask = (id) => {
@@ -52,9 +56,9 @@ export const useStore = () => {
     writeStateToLS('appTheme'); // save theme settings
   }
 
-  const writeStateToLS = (targetKey) => {
+  const writeStateToLS = (targetKey, update) => {
     if (targetKey) {
-      const current = targetKey in state ? state[targetKey] : null;
+      const current = update || state[targetKey] || null; // parameter 'update' is an optional override - if missing, the whole state of 'targetKey' will be written to LS
       if (current) {
         ls.setItem(targetKey, JSON.stringify(current));
       }
