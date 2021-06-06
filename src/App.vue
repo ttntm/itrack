@@ -20,9 +20,9 @@ export default {
     });
 
     onMounted(() => {
-      const app = document.getElementById('app');
-      app.style.opacity = '1';
-      app.style.transition = 'opacity 1.5s ease';
+      const appNode = document.getElementById('app');
+      appNode.style.opacity = '1';
+      appNode.style.transition = 'opacity 1.5s ease';
       setTimeout(readStateFromLS(['appTheme', 'tasklist']), 50);
       setTimeout(deactivateAll(), 100); // just in case someone has saved the task list with a running task
       setTimeout(applyTheme(appTheme.value), 150);
