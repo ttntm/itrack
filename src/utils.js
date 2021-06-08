@@ -17,9 +17,9 @@ export const formatTime = (input) => {
 
   let sec = input - (min * 60) - (hrs * 3600);
 
-  return hrs > 0 ?
-    `${(hrs < 10 ? '0' : '') + hrs}:${(min < 10 ? '0' : '') + min}:${(sec < 10 ? '0' : '') + sec}` :
-    `${(min < 10 ? '0' : '') + min}:${(sec < 10 ? '0' : '') + sec}`;
+  return hrs > 0
+    ? `${(hrs < 10 ? '0' : '') + hrs}:${(min < 10 ? '0' : '') + min}:${(sec < 10 ? '0' : '') + sec}`
+    : `${(min < 10 ? '0' : '') + min}:${(sec < 10 ? '0' : '') + sec}`
 }
 
 export const getDate = () => {

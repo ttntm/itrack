@@ -114,7 +114,8 @@
   }
 
   .btn:focus {
-    @apply outline-none shadow-outline;
+    outline: none;
+    @apply shadow-outline;
   }
 
   .btn-default {
@@ -182,7 +183,8 @@
   }
 
   .btn-theme-switch:focus {
-    @apply outline-none shadow-outline;
+    outline: none;
+    @apply shadow-outline;
   }
 
   /* BTN SAVE -------------------------------------------------------------------------------- */
@@ -210,7 +212,8 @@
   }
 
   .input-task:focus {
-    @apply outline-none shadow-outline;
+    outline: none;
+    @apply shadow-outline;
     background-color: var(--inputHoverColor);
     border-color: var(--inputHoverBorder);
   }

@@ -13,19 +13,32 @@ export default {
     TaskList
   },
   setup() {
-    const { appTheme, deactivateAll, readStateFromLS } = useStore();
+    const { activeTasks, appTheme, deactivateAll, readStateFromLS } = useStore();
 
     const logoSrc = computed(() => {
       return appTheme.value !== 'dark' ? '/img/logo-light.svg' : '/img/logo-dark.svg';
     });
 
+    const onAppClose = (e) => {
+      if (activeTasks.value && activeTasks.value.length !== 0) {
+        console.log(activeTasks.value)
+        e.preventDefault(); // FF
+        e.returnValue = ''; // Chrome
+      } else {
+        delete e['returnValue'];
+      }
+    }
+
     onMounted(() => {
       const appNode = document.getElementById('app');
       appNode.style.opacity = '1';
       appNode.style.transition = 'opacity 1.5s ease';
+
       setTimeout(readStateFromLS(['appTheme', 'tasklist']), 50);
       setTimeout(deactivateAll(), 100); // just in case someone has saved the task list with a running task
       setTimeout(applyTheme(appTheme.value), 150);
+
+      window.addEventListener('beforeunload', onAppClose);
     })
 
     return {

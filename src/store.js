@@ -10,15 +10,14 @@ const state = reactive({
 
 export const useStore = () => {
   // getters
+  const getActiveTasks = computed(() => state.tasklist.filter(task => task.taskActive));
   const getAppTheme = computed(() => state.appTheme);
   const getTasklist = computed(() => state.tasklist);
 
   //actions
-  const addTask = (task) => { state.tasklist.push(task); }
+  const addTask = task => state.tasklist.push(task);
 
-  const deactivateAll = () => {
-    state.tasklist.forEach(task => task.taskActive = false);
-  }
+  const deactivateAll = () => state.tasklist.forEach(task => task.taskActive = false);
 
   const editTaskName = (id, newName) => {
     state.tasklist.forEach(task => {
@@ -65,7 +64,7 @@ export const useStore = () => {
     } else {
       Object.keys(state).map(key => {
         ls.setItem(key, JSON.stringify(state[key]));
-      })
+      });
     }
   }
 
@@ -81,6 +80,7 @@ export const useStore = () => {
   }
 
   return {
+    activeTasks: getActiveTasks,
     appTheme: getAppTheme,
     tasklist: getTasklist,
     addTask,
@@ -92,5 +92,5 @@ export const useStore = () => {
     setTheme,
     writeStateToLS,
     readStateFromLS
-  };
+  }
 }
