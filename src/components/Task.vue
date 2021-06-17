@@ -35,7 +35,7 @@ export default {
     const taskTotal = ref(0);
     const timeSpent = computed(() => { return formatTime(taskTotal.value) });
 
-    let increment;
+    let timer;
 
     const deleteTaskFromList = (current) => {
       if (taskTotal.value > 0) {
@@ -70,12 +70,14 @@ export default {
 
     watch(active, () => {
       if (active.value) {
-        increment = setInterval(() => {
-          taskTotal.value++;
+        timer = new Worker('./timer-worker.js');
+        timer.postMessage({ total: taskTotal.value });
+        timer.onmessage = (e) => {
+          taskTotal.value = e.data;
           emit('update:total');
-        }, 1000);
+        }
       } else {
-        clearInterval(increment);
+        timer.terminate();
       }
     })
 
