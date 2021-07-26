@@ -22,7 +22,7 @@ import { applyTheme } from '../../utils.js';
 export default {
   name: 'BtnSwitchTheme',
   setup() {
-    const { appTheme, setTheme } = useStore();
+    const { appTheme, setState } = useStore();
 
     const btn = ref();
     const btnTitle = computed(() => {
@@ -30,7 +30,7 @@ export default {
     })
 
     const switchTheme = () => {
-      appTheme.value === 'light' ? setTheme('dark') : setTheme('light');
+      appTheme.value === 'light' ? setState('appTheme', 'dark', true) : setState('appTheme', 'light', true);
       applyTheme(appTheme.value);
       btn.value.blur();
     }

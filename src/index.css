@@ -45,6 +45,8 @@
   --taskCardActive: var(--taskCardHover);
   --taskCardActiveBorder: var(--gray-mid);
   --taskCardActiveHoverBorder: var(--secondary);
+  --settingsBG: #fff;
+  --settingsBorder: transparent;
 }
 
 [data-theme="dark"] {
@@ -66,6 +68,8 @@
   --taskCardActive: transparent;
   --taskCardActiveBorder: var(--gray-dark);
   --taskCardActiveHoverBorder: var(--primary);
+  --settingsBG: var(--secondary);
+  --settingsBorder: var(--gray-dark);
 }
 
 @tailwind base;
@@ -190,14 +194,34 @@
     @apply text-primary bg-secondary;
   }
 
-  /* BTN THEME SWITCH -------------------------------------------------------------------------------- */
-  .btn-theme-switch {
+  /* BTN SETTINGS -------------------------------------------------------------------------------- */
+  .btn-settings {
     @apply flex items-center justify-center rounded-full text-gray-mid w-8 h-8 mx-auto;
   }
 
   @media(min-width: 768px) {
-    .btn-theme-switch {
+    .btn-settings {
       @apply absolute top-0 right-0 m-8;
+    }
+  }
+
+  .btn-settings:hover {
+    @apply text-gray-dark;
+  }
+
+  .btn-settings:focus {
+    outline: none;
+    @apply shadow-outline;
+  }
+  
+  /* BTN THEME SWITCH -------------------------------------------------------------------------------- */
+  .btn-theme-switch {
+    @apply hidden;
+  }
+
+  @media(min-width: 768px) {
+    .btn-theme-switch {
+      @apply fixed bottom-0 right-0 flex items-center justify-center rounded-full text-gray-mid w-8 h-8 m-8;
     }
   }
 
@@ -328,6 +352,26 @@
     .btn-edit-enter:focus {
       @apply w-8 opacity-100 mr-2;
     }
+  }
+
+  /* SETTINGS MODAL -------------------------------------------------------------------------------- */
+
+  .settings {
+    @apply absolute top-0 right-0 max-w-md border rounded-lg shadow-lg m-8;
+    background-color: var(--settingsBG);
+    border-color: var(--settingsBorder)
+  }
+
+  .modal-enter-active,
+  .modal-leave-active {
+    opacity: 1;
+    transition: all 0.6s ease;
+  }
+
+  .modal-enter-from,
+  .modal-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
   }
 
 @tailwind utilities;

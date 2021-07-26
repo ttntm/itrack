@@ -6,7 +6,7 @@ import BtnTaskEdit from './button/BtnTaskEdit.vue';
 import BtnTaskEditSave from './button/BtnTaskEditSave.vue';
 import InputText from './input/InputText.vue';
 
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useStore } from '../store.js';
 import { formatTime } from '../utils.js'
 
@@ -25,22 +25,22 @@ export default {
   },
   emits: ['reduce:total','update:total'],
   setup(props, { emit }) {
-    const { editTaskName, removeTask, setActiveTask, setPausedTask } = useStore();
+    const { removeTask, setActiveTask, setPausedTask, updateTask } = useStore();
 
     const active = computed(() => props.task.taskActive);
     const editTask = reactive({
       editing: false,
       name: ''
     });
-    const taskTotal = ref(0);
+    const taskTotal = computed(() => props.task.taskTotal);
     const timeSpent = computed(() => { return formatTime(taskTotal.value) });
 
     let timer;
 
     const deleteTaskFromList = (current) => {
       if (taskTotal.value > 0) {
-        if(confirm('Do you really want to remove this task and the time spent on it?')) {
-          clearInterval(increment);
+        if (confirm('Do you really want to remove this task and the time spent on it?')) {
+          stopTimerWorker();
           removeTask(current);
           emit('reduce:total', taskTotal.value);
         } else { return }
@@ -49,18 +49,29 @@ export default {
       }
     }
 
+    const pauseTracking = () => { setPausedTask(props.task.id); }
+
+    const startTimerWorker = () => {
+      timer = new Worker('./timer-worker.js');
+      timer.postMessage({ total: taskTotal.value });
+      timer.onmessage = (e) => {
+        updateTask(props.task.id, 'taskTotal', e.data);
+        emit('update:total');
+      }
+    }
+
+    const startTracking = () => { setActiveTask(props.task.id); }
+
+    const stopTimerWorker = () => { timer.terminate(); }
+
     const toggleEdit = () => {
       editTask.editing = !editTask.editing;
       return editTask.editing ? editTask.name = props.task.name : ''
     }
 
-    const startTracking = () => { setActiveTask(props.task.id); }
-
-    const pauseTracking = () => { setPausedTask(props.task.id); }
-
-    const updateTask = () => {
+    const updateCurrentTask = () => {
       if (editTask.name) {
-        editTaskName(props.task.id, editTask.name);
+        updateTask(props.task.id, 'name', editTask.name);
         toggleEdit();
       } else {
         alert('Please enter a task name!');
@@ -70,15 +81,14 @@ export default {
 
     watch(active, () => {
       if (active.value) {
-        timer = new Worker('./timer-worker.js');
-        timer.postMessage({ total: taskTotal.value });
-        timer.onmessage = (e) => {
-          taskTotal.value = e.data;
-          emit('update:total');
-        }
+        startTimerWorker();
       } else {
-        timer.terminate();
+        stopTimerWorker();
       }
+    })
+
+    onMounted(() => {
+      if (active.value) startTimerWorker();
     })
 
     return {
@@ -89,7 +99,7 @@ export default {
       pauseTracking,
       startTracking,
       timeSpent,
-      updateTask
+      updateCurrentTask
     }
   }
 }
@@ -102,14 +112,14 @@ export default {
       <div class="flex flex-grow items-center justify-start relative">
         <transition-group name="fade">
           <p v-if="!editTask.editing" :class="{ 'font-bold' : active }" class="absolute w-full">{{ task.name }}</p>
-          <InputText v-if="editTask.editing" v-model="editTask.name" v-click-outside="toggleEdit" v-esc="toggleEdit" class="input-task absolute w-full px-2 py-1" @keydown.enter="updateTask" />
+          <InputText v-if="editTask.editing" v-model="editTask.name" v-click-outside="toggleEdit" v-esc="toggleEdit" class="input-task absolute w-full px-2 py-1" @keydown.enter="updateCurrentTask" />
         </transition-group>
       </div>
       <transition name="fade">
-        <BtnTaskEditSave v-if="editTask.editing" class="ml-2 click-outside-ignore" @click="updateTask" />
+        <BtnTaskEditSave v-if="editTask.editing" class="ml-2 click-outside-ignore" @click="updateCurrentTask" />
       </transition>
     </div>
-    <div class="separator h-px  md:hidden my-4" />
+    <div class="separator h-px md:hidden my-4" />
     <div class="flex items-center justify-between">
       <p class="w-1/3 md:ml-8 md:mr-4">{{ timeSpent }}</p>
       <div class="w-1/3 relative md:px-8">

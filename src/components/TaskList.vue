@@ -17,44 +17,56 @@ export default {
     Task
   },
   setup() {
-    const { addTask, tasklist } = useStore();
+    const { addTask, autoStart, deactivateAll, resetSavedTime, saveTime, setState, tasklist, tasklistTotal } = useStore();
 
     const newTask = reactive({
       id: '',
       name: '',
-      taskActive: false
+      taskActive: false,
+      taskTotal: 0
     });
 
     const today = getDate();
-    const total = ref(0);
+    const total = computed(() => tasklistTotal.value);
     const totalDisplay = computed(() => { return formatTime(total.value) });
 
     const createNewTask = () => {
       if (newTask.name) {
         newTask.id = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
+        
+        if (autoStart.value) {
+          deactivateAll();
+          newTask.taskActive = autoStart.value;
+        }
 
         addTask({ ...newTask });
 
         newTask.id = '';
         newTask.name = '';
       } else {
-        alert('Please enter a task name!');
+        return alert('Please enter a task name!');
+      }
+    }
+
+    const resetBtnClick = () => {
+      if (confirm('This will reset all tracked time and save your task list - are you sure?')) {
+        resetSavedTime();
+      } else { 
         return
       }
     }
 
     const updateTotal = (minus) => {
-      if (minus) {
-        total.value = total.value - minus;
-      } else {
-        total.value++
-      }
+      let calc = minus ? total.value - minus : total.value + 1;
+      return setState('tasklistTotal', calc, false)
     }
 
     return {
       createNewTask,
       tasklist,
       newTask,
+      resetBtnClick,
+      saveTime,
       today,
       total,
       totalDisplay,
@@ -84,10 +96,11 @@ export default {
       <p class="text-center text-xl font-bold tracking-wide text-gray-dark">All Tasks: {{ totalDisplay }}</p>
     </section>
   </transition>
-  <section class="new-task mt-8 mb-16">
+  <section class="new-task my-8">
     <InputText v-model="newTask.name" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="createNewTask" />
-    <BtnDefault @click="createNewTask">
-      Add Task
-    </BtnDefault>
+    <BtnDefault @click="createNewTask">Add Task</BtnDefault>
   </section>
+  <div v-if="saveTime" class="text-center text-gray-dark small mb-16">
+    <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" title="Will save the task list and remove all time tracked in total and for individual tasks." @click="resetBtnClick">Reset Time Tracking</button>
+  </div>
 </template>
