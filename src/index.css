@@ -360,7 +360,7 @@
     @apply absolute top-0 right-0 max-w-md border rounded-lg shadow-lg m-8;
     background-color: var(--settingsBG);
     border-color: var(--settingsBorder);
-    width: calc(100% - 2rem);
+    width: calc(100% - 4rem);
   }
 
   .modal-enter-active,
