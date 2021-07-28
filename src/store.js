@@ -95,9 +95,8 @@ export const useStore = () => {
    */
   const resetSavedTime = () => {
     state.tasklist.forEach(task => task.taskTotal = 0);
-    state.tasklistTotal = 0;
     writeStateToLS('tasklist');
-    writeStateToLS('tasklistTotal');
+    setState('tasklistTotal', 0, true);
   }
 
   /**
