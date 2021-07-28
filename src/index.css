@@ -359,7 +359,8 @@
   .settings {
     @apply absolute top-0 right-0 max-w-md border rounded-lg shadow-lg m-8;
     background-color: var(--settingsBG);
-    border-color: var(--settingsBorder)
+    border-color: var(--settingsBorder);
+    width: calc(100% - 2rem);
   }
 
   .modal-enter-active,
@@ -372,6 +373,21 @@
   .modal-leave-to {
     opacity: 0;
     transform: translateY(-30px);
+  }
+
+  .modal-inner-enter-active,
+  .modal-inner-leave-active {
+    height: auto;
+    max-height: auto;
+    opacity: 1;
+    transition: height 0.75s ease;
+  }
+
+  .modal-inner-enter-from,
+  .modal-inner-leave-to {
+    height: 0;
+    max-height: 0;
+    opacity: 0;
   }
 
 @tailwind utilities;

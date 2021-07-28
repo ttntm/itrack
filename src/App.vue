@@ -25,7 +25,6 @@ export default {
 
     const onAppClose = (e) => {
       if (activeTasks.value && activeTasks.value.length !== 0) {
-        console.log(activeTasks.value)
         e.preventDefault(); // FF
         e.returnValue = ''; // Chrome
       } else {

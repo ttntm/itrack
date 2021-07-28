@@ -1,6 +1,17 @@
 import { computed, reactive } from 'vue';
 
-const isBoolean = val => 'boolean' === typeof val
+/**
+ * @typedef {Object} Task
+ * @property {String} id Task ID
+ * @property {String} name Task name based on user input
+ * @property {Boolean} taskActive Marks the task that is currently active in tracking 
+ * @property {Number} taskTotal Total time tracked for this specific task
+ */
+
+/**
+ * Returns 'true' if a value is Boolean
+ */
+const isBoolean = val => 'boolean' === typeof val;
 
 const ls = window.localStorage;
 
@@ -15,7 +26,7 @@ const state = reactive({
 });
 
 export const useStore = () => {
-  // getters
+  // getters -- readonly
   const getActiveTasks = computed(() => state.tasklist.filter(task => task.taskActive));
   const getAppTheme = computed(() => state.appTheme);
   const getAutoStart = computed(() => state.autoStart);
@@ -25,14 +36,25 @@ export const useStore = () => {
   const getTasklistTotal = computed(() => state.tasklistTotal);
 
   //actions
+  /**
+   * Adds a task to the tasklist.
+   * @param {Task} task - the new task object.
+   */
   const addTask = task => state.tasklist.push(task);
 
+  /**
+   * Deactivates tracking for all tasks in the tasklist.
+   */
   const deactivateAll = () => state.tasklist.forEach(task => task.taskActive = false);
 
+  /**
+   * Reads one or more keys from localStorage.
+   * @param {String[]} storedKeys - a list of keys to obtain from localStorage.
+   */
   const readStateFromLS = (storedKeys) => {
     storedKeys.forEach((sKey) => {
-      const stored = ls.getItem(sKey);
-      const storedState = JSON.parse(stored);
+      let stored = ls.getItem(sKey);
+      let storedState = JSON.parse(stored);
 
       if (storedState && sKey in state) {
         state[sKey] = storedState;
@@ -40,6 +62,10 @@ export const useStore = () => {
     });
   }
 
+  /**
+   * Removes a task from the tasklist based on its ID.
+   * @param {Task} toRemove - the task object that should be removed from the tasklist. 
+   */
   const removeTask = (toRemove) => {
     const filtered = (source) => source.filter(task => task.id !== toRemove.id);
     let savedTasks = JSON.parse(ls.getItem('tasklist'));
@@ -49,6 +75,9 @@ export const useStore = () => {
     if (savedTasks.length > 0) writeStateToLS('tasklist', filtered(savedTasks)); // remove saved tasks so they don't come back on reload
   }
 
+  /**
+   * Resets all tracked time.
+   */
   const resetSavedTime = () => {
     state.tasklist.forEach(task => task.taskTotal = 0);
     state.tasklistTotal = 0;
@@ -56,12 +85,20 @@ export const useStore = () => {
     writeStateToLS('tasklistTotal');
   }
 
+  /**
+   * Sets a task to active, thereby starting time tracking.
+   * @param {String} id - The ID of the task the should be activated.
+   */
   const setActiveTask = (id) => {
     state.tasklist.forEach(task => {
       task.id === id ? task.taskActive = true : task.taskActive = false;
     });
   }
 
+  /**
+   * Sets a task to paused, thereby stopping time tracking.
+   * @param {String} id - The ID of the task the should be stopped.
+   */
   const setPausedTask = (id) => {
     state.tasklist.forEach(task => {
       if (task.id === id) {
@@ -70,13 +107,28 @@ export const useStore = () => {
     });
   }
 
+  /**
+   * Sets the value of a specific state key. Can optionally also update localStorage
+   * @param {String} key - The name of the state key.
+   * @param {(Boolean|Number|Task[]|String)} val - The new value for the specified key.
+   * @param {Boolean} ls - Controls whether or not to write the state update into localStorage.
+   */
   const setState = (key, val, ls) => {
     state[key] = val;
     if (ls) writeStateToLS(key, val); // save key to LS as well
   }
 
+  /**
+   * Show/hide the settings menu.
+   */
   const toggleSettings = () => { state.showSettings = !state.showSettings }
 
+  /**
+   * Updates a specific property on a specific task object.
+   * @param {String} id - The ID of the task that should be updated.
+   * @param {String} key - The task's property name to update.
+   * @param {(Boolean|Number|String)} value - The new value for the updated property.
+   */
   const updateTask = (id, key, value) => {
     state.tasklist.forEach(task => {
       if (task.id === id) {
@@ -85,6 +137,12 @@ export const useStore = () => {
     });
   }
 
+  /**
+   * Updates information stored in localStorage. Can be used to update all state keys (no params) or to update a single key.
+   * Can be used with or without an updated value when updating a single key.
+   * @param {String} [targetKey] - The state key to write to localStorage.
+   * @param {(Boolean|Number|Task[]|String)} [update] - The updated value for the specified key.
+   */
   const writeStateToLS = (targetKey, update) => {
     if (update || isBoolean(update) || typeof update == 'number') {
       ls.setItem(targetKey, JSON.stringify(update));

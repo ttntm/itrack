@@ -2,7 +2,7 @@
 import BtnDefault from './button/BtnDefault.vue';
 import InputToggle from './input/InputToggle.vue';
 
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useStore } from '../store.js';
 import { applyTheme } from '../utils.js';
 
@@ -14,6 +14,8 @@ export default {
   },
   setup() {
     const { appTheme, autoStart, saveTime, setState, toggleSettings } = useStore();
+
+    const saved = ref(false);
 
     const settings = reactive({
       autoStart: autoStart.value,
@@ -28,13 +30,19 @@ export default {
       setState('saveTime', settings.saveTaskTotal, true);
       setState('appTheme', theme, true);
       
-      toggleSettings();
       applyTheme(appTheme.value);
+
+      saved.value = true;
+
+      setTimeout(() => {
+        toggleSettings();
+      }, 1250)
     }
 
     const updateSettings = (key, value) => { settings[key] = value }
 
     return {
+      saved,
       saveSettings,
       settings,
       toggleSettings,
@@ -56,11 +64,16 @@ export default {
         </svg>
       </button>
     </div>
-    <div class="pb-8 px-8">
-      <InputToggle v-model="settings.autoStart" name="autostart" @update:modelValue="updateSettings('autoStart', $event)">Automatically start tracking for new tasks</InputToggle>
-      <InputToggle v-model="settings.saveTaskTotal" name="save-total" @update:modelValue="updateSettings('saveTaskTotal', $event)">Save tasks with time tracked</InputToggle>
-      <InputToggle v-model="settings.darkTheme" name="theme" @update:modelValue="updateSettings('darkTheme', $event)">Use dark theme</InputToggle>
-      <BtnDefault class="text-sm px-6 py-1 mt-6 mx-auto" @click="saveSettings">Save Settings</BtnDefault>
+    <div class="relative pb-8 px-8">
+      <transition-group name="modal-inner">
+        <p v-if="saved" class="text-lg text-center">Settings saved &#10003;</p>
+        <div v-if="!saved">
+          <InputToggle v-model="settings.autoStart" name="autostart" @update:modelValue="updateSettings('autoStart', $event)">Automatically start tracking for new tasks</InputToggle>
+          <InputToggle v-model="settings.saveTaskTotal" name="save-total" @update:modelValue="updateSettings('saveTaskTotal', $event)">Save tasks with time tracked</InputToggle>
+          <InputToggle v-model="settings.darkTheme" name="theme" @update:modelValue="updateSettings('darkTheme', $event)">Use dark theme</InputToggle>
+          <BtnDefault class="text-sm px-6 mt-6 mx-auto" @click="saveSettings">Save Settings</BtnDefault>
+        </div>
+      </transition-group>
     </div>
   </div>
 </template>

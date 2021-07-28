@@ -8,7 +8,7 @@ import InputText from './input/InputText.vue';
 
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useStore } from '../store.js';
-import { formatTime } from '../utils.js'
+import { formatTime } from '../utils.js';
 
 export default {
   name: 'Task',
@@ -74,8 +74,7 @@ export default {
         updateTask(props.task.id, 'name', editTask.name);
         toggleEdit();
       } else {
-        alert('Please enter a task name!');
-        return
+        return alert('Please enter a task name!');
       }
     }
 
