@@ -58,7 +58,7 @@ export default {
 
     const updateTotal = (minus) => {
       let calc = minus ? total.value - minus : total.value + 1;
-      return setState('tasklistTotal', calc, false)
+      return setState('tasklistTotal', calc, saveTime.value)
     }
 
     return {

@@ -31,12 +31,11 @@ export default {
       setState('appTheme', theme, true);
       
       applyTheme(appTheme.value);
-
       saved.value = true;
 
       setTimeout(() => {
         toggleSettings();
-      }, 1250)
+      }, 1000)
     }
 
     const updateSettings = (key, value) => { settings[key] = value }
@@ -66,13 +65,13 @@ export default {
     </div>
     <div class="relative pb-8 px-8">
       <transition-group name="modal-inner">
-        <p v-if="saved" class="text-lg text-center">Settings saved &#10003;</p>
         <div v-if="!saved">
           <InputToggle v-model="settings.autoStart" name="autostart" @update:modelValue="updateSettings('autoStart', $event)">Automatically start tracking for new tasks</InputToggle>
           <InputToggle v-model="settings.saveTaskTotal" name="save-total" @update:modelValue="updateSettings('saveTaskTotal', $event)">Save tasks with time tracked</InputToggle>
           <InputToggle v-model="settings.darkTheme" name="theme" @update:modelValue="updateSettings('darkTheme', $event)">Use dark theme</InputToggle>
           <BtnDefault class="text-sm px-6 mt-6 mx-auto" @click="saveSettings">Save Settings</BtnDefault>
         </div>
+        <p v-else class="text-lg text-center">Settings saved &#10003;</p>
       </transition-group>
     </div>
   </div>

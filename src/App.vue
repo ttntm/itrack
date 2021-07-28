@@ -17,7 +17,7 @@ export default {
     TaskList
   },
   setup() {
-    const { activeTasks, appTheme, deactivateAll, readStateFromLS, settingsShown } = useStore();
+    const { activeTasks, appTheme, deactivateAll, initTasklist, readStateFromLS, settingsShown } = useStore();
 
     const logoSrc = computed(() => {
       return appTheme.value !== 'dark' ? '/img/logo-light.svg' : '/img/logo-dark.svg';
@@ -40,6 +40,8 @@ export default {
       setTimeout(readStateFromLS(['appTheme', 'autoStart', 'saveTime', 'tasklist', 'tasklistTotal']), 50);
       setTimeout(deactivateAll(), 100); // just in case someone has saved the task list with a running task
       setTimeout(applyTheme(appTheme.value), 150);
+
+      initTasklist();
 
       window.addEventListener('beforeunload', onAppClose);
     })

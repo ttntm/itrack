@@ -48,6 +48,21 @@ export const useStore = () => {
   const deactivateAll = () => state.tasklist.forEach(task => task.taskActive = false);
 
   /**
+   * Initialize tasklistTotal.
+   * Runs when the app starts and makes sure that the correct total time gets calculated and displayed.
+   * Will calculate and set the tasklistTotal based on the saved tasks obtained from localStorage or set it to 0 if there are none.
+   */
+  const initTasklist = () => {
+    let newTotal = 0;
+    
+    if (state.saveTime && state.tasklist.length > 0) {
+      state.tasklist.forEach(task => newTotal = newTotal + task.taskTotal);
+    }
+    
+    setState('tasklistTotal', newTotal, true);
+  }
+
+  /**
    * Reads one or more keys from localStorage.
    * @param {String[]} storedKeys - a list of keys to obtain from localStorage.
    */
@@ -165,14 +180,15 @@ export const useStore = () => {
     tasklistTotal: getTasklistTotal,
     addTask,
     deactivateAll,
-    updateTask,
+    initTasklist,
+    readStateFromLS,
     removeTask,
     resetSavedTime,
     setActiveTask,
-    setState,
     setPausedTask,
+    setState,
     toggleSettings,
-    writeStateToLS,
-    readStateFromLS
+    updateTask,
+    writeStateToLS
   }
 }

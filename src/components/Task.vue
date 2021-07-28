@@ -40,7 +40,7 @@ export default {
     const deleteTaskFromList = (current) => {
       if (taskTotal.value > 0) {
         if (confirm('Do you really want to remove this task and the time spent on it?')) {
-          stopTimerWorker();
+          if (active.value) stopTimerWorker();
           removeTask(current);
           emit('reduce:total', taskTotal.value);
         } else { return }
