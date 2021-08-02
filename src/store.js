@@ -2,10 +2,10 @@ import { computed, reactive } from 'vue';
 
 /**
  * @typedef {Object} Task
- * @property {String} id Task ID
- * @property {String} name Task name based on user input
- * @property {Boolean} taskActive Marks the task that is currently active in tracking 
- * @property {Number} taskTotal Total time tracked for this specific task
+ * @property {String} id - Task ID
+ * @property {String} name - Task name based on user input
+ * @property {Boolean} taskActive - Marks the task that is currently active in tracking 
+ * @property {Number} taskTotal - Total time tracked for this specific task
  */
 
 /**
@@ -56,7 +56,7 @@ export const useStore = () => {
     let newTotal = 0;
     
     if (state.saveTime && state.tasklist.length > 0) {
-      state.tasklist.forEach(task => newTotal = newTotal + task.taskTotal);
+      state.tasklist.forEach(task => newTotal += task.taskTotal);
     }
     
     setState('tasklistTotal', newTotal, true);
@@ -94,6 +94,7 @@ export const useStore = () => {
    * Resets all tracked time.
    */
   const resetSavedTime = () => {
+    deactivateAll();
     state.tasklist.forEach(task => task.taskTotal = 0);
     writeStateToLS('tasklist');
     setState('tasklistTotal', 0, true);

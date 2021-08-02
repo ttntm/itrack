@@ -49,7 +49,7 @@ export default {
     }
 
     const resetBtnClick = () => {
-      if (confirm('This will reset all tracked time and save your task list - are you sure?')) {
+      if (confirm('This reset will stop tracking, reset all tracked time and save your task list - are you sure?')) {
         resetSavedTime();
       } else { 
         return
@@ -101,6 +101,6 @@ export default {
     <BtnDefault @click="createNewTask">Add Task</BtnDefault>
   </section>
   <div v-if="saveTime && tasklist.length > 0" class="text-center text-gray-dark small mb-16">
-    <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" title="Will save the task list and remove all time tracked in total and for individual tasks." @click="resetBtnClick">Reset Time Tracking</button>
+    <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" @click="resetBtnClick">Reset Time Tracking</button>
   </div>
 </template>
