@@ -100,7 +100,9 @@ export default {
     <InputText v-model="newTask.name" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="createNewTask" />
     <BtnDefault @click="createNewTask">Add Task</BtnDefault>
   </section>
-  <div v-if="saveTime && tasklist.length > 0" class="text-center text-gray-dark small mb-16">
-    <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" @click="resetBtnClick">Reset Time Tracking</button>
-  </div>
+  <transition name="fade">
+    <div v-if="saveTime && tasklist.length > 0" class="text-center text-gray-dark small mb-16">
+      <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" @click="resetBtnClick">Reset Time Tracking</button>
+    </div>
+  </transition>
 </template>
