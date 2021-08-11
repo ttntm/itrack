@@ -219,7 +219,7 @@
     @apply hidden;
   }
 
-  @media(min-width: 768px) {
+  @media(min-width: 1024px) {
     .btn-theme-switch {
       @apply fixed bottom-0 right-0 flex items-center justify-center rounded-full text-gray-mid w-8 h-8 m-8;
     }
