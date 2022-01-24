@@ -1,48 +1,72 @@
 <script setup>
+  import { computed, ref, watch } from 'vue'
+  import draggable from 'vuedraggable'
+  import { useStore } from '@/store.js'
+  import { formatTime, getDate } from '@/utils.js'
+
   import BtnDefault from '@/components/button/BtnDefault.vue'
   import BtnSave from '@/components/button/BtnSave.vue'
   import InputText from '@/components/input/InputText.vue'
   import Task from '@/components/Task.vue'
 
-  import { computed, reactive } from 'vue'
-  import { useStore } from '@/store.js'
-  import { formatTime, getDate } from '@/utils.js'
+  const { addTask, autoStart, deactivateAll, enableDrag, resetSavedTime, saveTime, setState, tasklist, tasklistTotal } = useStore()
 
-  const { addTask, autoStart, deactivateAll, resetSavedTime, saveTime, setState, tasklist, tasklistTotal } = useStore()
-
-  const newTask = reactive({
-    id: '',
-    name: '',
-    taskActive: false,
-    taskTotal: 0
-  })
+  const drag = ref(false)
+  const localList = ref([])
+  const taskName = ref('')
 
   const total = computed(() => tasklistTotal.value)
   const totalDisplay = computed(() => { return formatTime(total.value) })
+
+  watch(tasklist, () => localList.value = tasklist.value)
   
+  const dragComponent = {
+    tag: 'Task',
+    type: 'transition-group',
+    name: 'list'
+  }
+  const dragOptions = {
+    animation: 500,
+    ghostClass: 'ghost'
+  }
   const today = getDate()
 
   const events = {
     onCreate() {
-      if (newTask.name) {
-        newTask.id = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)
-        
-        if (autoStart.value) {
-          deactivateAll()
-          newTask.taskActive = autoStart.value
-        }
-
-        addTask({ ...newTask })
-
-        newTask.id = ''
-        newTask.name = ''
-      } else {
+      if (!taskName.value) {
         return alert('Please enter a task name!')
       }
+
+      const newTask = {
+        id: (Math.floor(Math.random() * 10000) + 10000).toString().substring(1),
+        name: taskName.value,
+        taskActive: false,
+        taskTotal: 0,
+        order: tasklist.value?.length || 0
+      }
+      
+      if (autoStart.value) {
+        deactivateAll()
+        newTask.taskActive = autoStart.value
+      }
+
+      addTask({ ...newTask })
+
+      taskName.value = ''
+    },
+
+    onDragChange() {
+      const ordered = (arr) => arr.map((el, index) => {
+        el.order = index
+        return el
+      })
+
+      setState('tasklist', ordered([...localList.value]), false)
     },
 
     onReset() {
-      if (confirm('This reset will stop tracking, reset all tracked time and save your task list - are you sure?')) {
+      const msg = 'This reset will stop tracking, reset all tracked time and save your task list - are you sure?'
+      if (confirm(msg)) {
         resetSavedTime()
       } else { 
         return
@@ -54,6 +78,8 @@
       return setState('tasklistTotal', calc, saveTime.value)
     }
   }
+
+  localList.value = tasklist.value
 </script>
 
 <template>
@@ -67,9 +93,21 @@
     </transition>
   </section>
   <section v-if="tasklist.length > 0" class="tasklist">
-    <transition-group name="list">
-      <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="events.onUpdate($event)" @update:total="events.onUpdate" />
-    </transition-group>
+    <draggable
+      :component-data="dragComponent"
+      :disabled="!enableDrag"
+      item-key="order"
+      tag="transition-group"
+      v-model="localList"
+      v-bind="dragOptions"
+      @start="drag=true"
+      @change="events.onDragChange"
+      @end="drag=false"
+    >
+      <template #item="{ element }">
+        <Task :key="element.id" :task="element" @reduce:total="events.onUpdate($event)" @update:total="events.onUpdate" />
+      </template>
+    </draggable>
   </section>
   <transition name="fade">
     <section v-if="tasklist.length > 0 || total > 0" class="my-8">
@@ -77,7 +115,7 @@
     </section>
   </transition>
   <section class="new-task my-8">
-    <InputText v-model="newTask.name" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="events.onCreate" />
+    <InputText v-model="taskName" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="events.onCreate" />
     <BtnDefault @click="events.onCreate">Add Task</BtnDefault>
   </section>
   <transition name="fade">
@@ -86,3 +124,13 @@
     </div>
   </transition>
 </template>
+
+<style lang="postcss" scoped>
+  .no-move {
+    transition: transform 0s;
+  }
+
+  .ghost {
+    @apply border-primary shadow-xl pointer-events-none;
+  }
+</style>

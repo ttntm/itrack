@@ -6,6 +6,7 @@ import { computed, reactive } from 'vue'
  * @property {String} name - Task name based on user input
  * @property {Boolean} taskActive - Marks the task that is currently active in tracking 
  * @property {Number} taskTotal - Total time tracked for this specific task
+ * @property {Number} order - Current 0-indexed position of the task in the list
  */
 
 /**
@@ -19,6 +20,7 @@ const ls = window.localStorage
 const state = reactive({
   appTheme: 'light',
   autoStart: false,
+  enableDrag: false,
   saveTime: false,
   showSettings: false,
   tasklist: [],
@@ -30,7 +32,8 @@ export const useStore = () => {
   const getActiveTasks = computed(() => state.tasklist.filter(task => task.taskActive))
   const getAppTheme = computed(() => state.appTheme)
   const getAutoStart = computed(() => state.autoStart)
-  const getsaveTime = computed(() => state.saveTime)
+  const getEnableDrag = computed(() => state.enableDrag)
+  const getSaveTime = computed(() => state.saveTime)
   const getSettingsDisplay = computed(() => state.showSettings)
   const getTasklist = computed(() => state.tasklist)
   const getTasklistTotal = computed(() => state.tasklistTotal)
@@ -174,7 +177,8 @@ export const useStore = () => {
     activeTasks: getActiveTasks,
     appTheme: getAppTheme,
     autoStart: getAutoStart,
-    saveTime: getsaveTime,
+    enableDrag: getEnableDrag,
+    saveTime: getSaveTime,
     settingsShown: getSettingsDisplay,
     tasklist: getTasklist,
     tasklistTotal: getTasklistTotal,

@@ -1,4 +1,8 @@
 <script setup>
+  import { computed, onMounted, reactive, watch } from 'vue'
+  import { useStore } from '@/store.js'
+  import { formatTime } from '@/utils.js'
+
   import BtnDelete from '@/components/button/BtnDelete.vue'
   import BtnPause from '@/components/button/BtnPause.vue'
   import BtnStart from '@/components/button/BtnStart.vue'
@@ -6,17 +10,13 @@
   import BtnTaskEditSave from '@/components/button/BtnTaskEditSave.vue'
   import InputText from '@/components/input/InputText.vue'
 
-  import { computed, onMounted, reactive, watch } from 'vue'
-  import { useStore } from '@/store.js'
-  import { formatTime } from '@/utils.js'
-
   const props = defineProps({
     task: Object
   })
 
   const emit = defineEmits(['reduce:total','update:total'])
 
-  const { removeTask, setActiveTask, setPausedTask, updateTask } = useStore()
+  const { enableDrag, removeTask, setActiveTask, setPausedTask, updateTask } = useStore()
 
   const editTask = reactive({
     editing: false,
@@ -85,7 +85,7 @@
 </script>
 
 <template>
-  <div :class="{ 'active' : active, 'text-sm' : !active }" class="task-item px-8 mb-4 py-6 lg:py-4">
+  <div :class="{ 'active' : active, 'text-sm' : !active, 'grab' : enableDrag }" class="task-item px-8 mb-4 py-6 lg:py-4">
     <div class="task-name flex flex-grow items-center justify-start lg:py-2">
       <BtnTaskEdit v-if="!editTask.editing" class="click-outside-ignore" @click="events.onEdit" />
       <div class="flex flex-grow items-center justify-start relative">

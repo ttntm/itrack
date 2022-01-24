@@ -28,7 +28,7 @@
     btnSave.value.blur()
 
     btnState.enabled = false
-    btnState.text = 'Task list saved &#10003'
+    btnState.text = 'Task list saved &#10003;'
 
     setTimeout(() => {
       btnState.enabled = true
