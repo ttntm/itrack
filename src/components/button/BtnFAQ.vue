@@ -8,9 +8,3 @@
     </svg>
   </button>
 </template>
-
-<script>
-export default {
-  name: 'BtnFAQ'
-}
-</script>

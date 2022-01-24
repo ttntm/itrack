@@ -1,12 +1,13 @@
 {
   "name": "aitrack",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
   },
   "dependencies": {
-    "vue": "^3.0.4"
+    "vue": "^3.0.4",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.1",

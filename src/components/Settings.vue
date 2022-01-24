@@ -1,54 +1,40 @@
-<script>
-import BtnDefault from './button/BtnDefault.vue';
-import InputToggle from './input/InputToggle.vue';
+<script setup>
+import BtnDefault from '@/components/button/BtnDefault.vue'
+import InputToggle from '@/components/input/InputToggle.vue'
 
-import { reactive, ref } from 'vue';
-import { useStore } from '../store.js';
-import { applyTheme } from '../utils.js';
+import { reactive, ref } from 'vue'
+import { useStore } from '@/store.js'
+import { applyTheme } from '@/utils.js'
 
-export default {
-  name: 'Settings',
-  components: {
-    BtnDefault,
-    InputToggle
-  },
-  setup() {
-    const { appTheme, autoStart, saveTime, setState, toggleSettings } = useStore();
+  const { appTheme, autoStart, saveTime, setState, toggleSettings } = useStore()
 
-    const saved = ref(false);
+  const settings = reactive({
+    autoStart: autoStart.value,
+    darkTheme: appTheme.value === 'dark' ? true : false,
+    saveTaskTotal: saveTime.value
+  })
+  const saved = ref(false)
 
-    const settings = reactive({
-      autoStart: autoStart.value,
-      darkTheme: appTheme.value === 'dark' ? true : false,
-      saveTaskTotal: saveTime.value
-    });
-
-    const saveSettings = () => {
-      let theme = settings.darkTheme ? 'dark' : 'light';
+  const events = {
+    onSave() {
+      let theme = settings.darkTheme ? 'dark' : 'light'
       
-      setState('autoStart', settings.autoStart, true);
-      setState('saveTime', settings.saveTaskTotal, true);
-      setState('appTheme', theme, true);
+      setState('autoStart', settings.autoStart, true)
+      setState('saveTime', settings.saveTaskTotal, true)
+      setState('appTheme', theme, true)
       
-      applyTheme(appTheme.value);
-      saved.value = true;
-
+      applyTheme(appTheme.value)
+      saved.value = true
+  
       setTimeout(() => {
-        toggleSettings();
+        toggleSettings()
       }, 1000)
-    }
+    },
 
-    const updateSettings = (key, value) => { settings[key] = value }
-
-    return {
-      saved,
-      saveSettings,
-      settings,
-      toggleSettings,
-      updateSettings
+    onUpdate(key, value) { 
+      settings[key] = value
     }
   }
-}
 </script>
 
 <template>
@@ -66,10 +52,10 @@ export default {
     <div class="relative pb-8 px-8">
       <transition-group name="modal-inner">
         <div v-if="!saved">
-          <InputToggle v-model="settings.autoStart" name="autostart" @update:modelValue="updateSettings('autoStart', $event)">Automatically start tracking for new tasks</InputToggle>
-          <InputToggle v-model="settings.saveTaskTotal" name="save-total" @update:modelValue="updateSettings('saveTaskTotal', $event)">Save tasks with time tracked</InputToggle>
-          <InputToggle v-model="settings.darkTheme" name="theme" @update:modelValue="updateSettings('darkTheme', $event)">Use dark theme</InputToggle>
-          <BtnDefault class="text-sm px-6 mt-6 mx-auto" @click="saveSettings">Save Settings</BtnDefault>
+          <InputToggle v-model="settings.autoStart" name="autostart" @update:modelValue="events.onUpdate('autoStart', $event)">Automatically start tracking for new tasks</InputToggle>
+          <InputToggle v-model="settings.saveTaskTotal" name="save-total" @update:modelValue="events.onUpdate('saveTaskTotal', $event)">Save tasks with time tracked</InputToggle>
+          <InputToggle v-model="settings.darkTheme" name="theme" @update:modelValue="events.onUpdate('darkTheme', $event)">Use dark theme</InputToggle>
+          <BtnDefault class="text-sm px-6 mt-6 mx-auto" @click="events.onSave">Save Settings</BtnDefault>
         </div>
         <p v-else class="text-lg text-center">Settings saved &#10003;</p>
       </transition-group>

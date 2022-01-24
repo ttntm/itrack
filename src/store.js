@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue';
+import { computed, reactive } from 'vue'
 
 /**
  * @typedef {Object} Task
@@ -11,9 +11,9 @@ import { computed, reactive } from 'vue';
 /**
  * Returns 'true' if a value is Boolean
  */
-const isBoolean = val => 'boolean' === typeof val;
+const isBoolean = val => 'boolean' === typeof val
 
-const ls = window.localStorage;
+const ls = window.localStorage
 
 // keep the state object private so that we can have shared state across components!
 const state = reactive({
@@ -23,29 +23,29 @@ const state = reactive({
   showSettings: false,
   tasklist: [],
   tasklistTotal: 0
-});
+})
 
 export const useStore = () => {
   // getters -- readonly
-  const getActiveTasks = computed(() => state.tasklist.filter(task => task.taskActive));
-  const getAppTheme = computed(() => state.appTheme);
-  const getAutoStart = computed(() => state.autoStart);
-  const getsaveTime = computed(() => state.saveTime);
-  const getSettingsDisplay = computed(() => state.showSettings);
-  const getTasklist = computed(() => state.tasklist);
-  const getTasklistTotal = computed(() => state.tasklistTotal);
+  const getActiveTasks = computed(() => state.tasklist.filter(task => task.taskActive))
+  const getAppTheme = computed(() => state.appTheme)
+  const getAutoStart = computed(() => state.autoStart)
+  const getsaveTime = computed(() => state.saveTime)
+  const getSettingsDisplay = computed(() => state.showSettings)
+  const getTasklist = computed(() => state.tasklist)
+  const getTasklistTotal = computed(() => state.tasklistTotal)
 
   //actions
   /**
    * Adds a task to the tasklist.
    * @param {Task} task - the new task object.
    */
-  const addTask = task => state.tasklist.push(task);
+  const addTask = task => state.tasklist.push(task)
 
   /**
    * Deactivates tracking for all tasks in the tasklist.
    */
-  const deactivateAll = () => state.tasklist.forEach(task => task.taskActive = false);
+  const deactivateAll = () => state.tasklist.forEach(task => task.taskActive = false)
 
   /**
    * Initialize tasklistTotal.
@@ -53,13 +53,13 @@ export const useStore = () => {
    * Will calculate and set the tasklistTotal based on the saved tasks obtained from localStorage or set it to 0 if there are none.
    */
   const initTasklist = () => {
-    let newTotal = 0;
+    let newTotal = 0
     
     if (state.saveTime && state.tasklist.length > 0) {
-      state.tasklist.forEach(task => newTotal += task.taskTotal);
+      state.tasklist.forEach(task => newTotal += task.taskTotal)
     }
     
-    setState('tasklistTotal', newTotal, true);
+    setState('tasklistTotal', newTotal, true)
   }
 
   /**
@@ -68,13 +68,13 @@ export const useStore = () => {
    */
   const readStateFromLS = (storedKeys) => {
     storedKeys.forEach((sKey) => {
-      let stored = ls.getItem(sKey);
-      let storedState = JSON.parse(stored);
+      let stored = ls.getItem(sKey)
+      let storedState = JSON.parse(stored)
 
       if (storedState && sKey in state) {
-        state[sKey] = storedState;
+        state[sKey] = storedState
       }
-    });
+    })
   }
 
   /**
@@ -82,22 +82,22 @@ export const useStore = () => {
    * @param {Task} toRemove - the task object that should be removed from the tasklist. 
    */
   const removeTask = (toRemove) => {
-    const filtered = (source) => source.filter(task => task.id !== toRemove.id);
-    let savedTasks = JSON.parse(ls.getItem('tasklist'));
+    const filtered = (source) => source.filter(task => task.id !== toRemove.id)
+    let savedTasks = JSON.parse(ls.getItem('tasklist'))
 
-    state.tasklist = filtered(state.tasklist);
+    state.tasklist = filtered(state.tasklist)
 
-    if (savedTasks.length > 0) writeStateToLS('tasklist', filtered(savedTasks)); // remove saved tasks so they don't come back on reload
+    if (savedTasks.length > 0) writeStateToLS('tasklist', filtered(savedTasks)) // remove saved tasks so they don't come back on reload
   }
 
   /**
    * Resets all tracked time.
    */
   const resetSavedTime = () => {
-    deactivateAll();
-    state.tasklist.forEach(task => task.taskTotal = 0);
-    writeStateToLS('tasklist');
-    setState('tasklistTotal', 0, true);
+    deactivateAll()
+    state.tasklist.forEach(task => task.taskTotal = 0)
+    writeStateToLS('tasklist')
+    setState('tasklistTotal', 0, true)
   }
 
   /**
@@ -106,8 +106,8 @@ export const useStore = () => {
    */
   const setActiveTask = (id) => {
     state.tasklist.forEach(task => {
-      task.id === id ? task.taskActive = true : task.taskActive = false;
-    });
+      task.id === id ? task.taskActive = true : task.taskActive = false
+    })
   }
 
   /**
@@ -117,9 +117,9 @@ export const useStore = () => {
   const setPausedTask = (id) => {
     state.tasklist.forEach(task => {
       if (task.id === id) {
-        task.taskActive = false;
+        task.taskActive = false
       }
-    });
+    })
   }
 
   /**
@@ -129,8 +129,8 @@ export const useStore = () => {
    * @param {Boolean} ls - Controls whether or not to write the state update into localStorage.
    */
   const setState = (key, val, ls) => {
-    state[key] = val;
-    if (ls) writeStateToLS(key, val); // save key to LS as well
+    state[key] = val
+    if (ls) writeStateToLS(key, val) // save key to LS as well
   }
 
   /**
@@ -147,9 +147,9 @@ export const useStore = () => {
   const updateTask = (id, key, value) => {
     state.tasklist.forEach(task => {
       if (task.id === id) {
-        task[key] = value;
+        task[key] = value
       }
-    });
+    })
   }
 
   /**
@@ -160,13 +160,13 @@ export const useStore = () => {
    */
   const writeStateToLS = (targetKey, update) => {
     if (update || isBoolean(update) || typeof update == 'number') {
-      ls.setItem(targetKey, JSON.stringify(update));
+      ls.setItem(targetKey, JSON.stringify(update))
     } else if (targetKey) {
-      ls.setItem(targetKey, JSON.stringify(state[targetKey]));
+      ls.setItem(targetKey, JSON.stringify(state[targetKey]))
     } else {
       Object.keys(state).map(key => {
-        ls.setItem(key, JSON.stringify(state[key]));
-      });
+        ls.setItem(key, JSON.stringify(state[key]))
+      })
     }
   }
 

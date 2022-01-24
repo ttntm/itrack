@@ -1,3 +1,11 @@
+<script setup>
+  const props = defineProps({
+    modelValue: Boolean,
+    name: String
+  })
+
+  const emit = defineEmits(['update:modelValue'])
+</script>
 <template>
   <div class="flex justify-start items-center mb-4">
     <div 
@@ -22,14 +30,3 @@
     </span>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'InputToggle',
-  props: {
-    modelValue: Boolean,
-    name: String
-  },
-  emits: ['update:modelValue']
-}
-</script>
