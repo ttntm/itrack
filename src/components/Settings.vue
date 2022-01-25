@@ -43,7 +43,7 @@
   <div class="settings" v-click-outside="toggleSettings" v-esc="toggleSettings">
     <div v-if="!saved" class="flex items-center justify-between pt-4 mb-6">
       <h2 class="text-lg font-bold text-center ml-8">Settings</h2>
-      <button class="btn btn-scale px-4" title="Close Settings Menu" @click="toggleSettings">
+      <button class="btn rounded-full p-1 mx-3" title="Close Settings Menu" @click="toggleSettings">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <line x1="18" y1="6" x2="6" y2="18" />
