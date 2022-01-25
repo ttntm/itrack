@@ -1,3 +1,10 @@
+<script setup>
+  const props = defineProps({
+    active: Boolean,
+    btnTitle: String
+  })
+</script>
+
 <template>
   <button :class="{ 'control-active' : active }" class="btn btn-control" :title="btnTitle">
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -7,13 +14,3 @@
     </svg>
   </button>
 </template>
-
-<script>
-export default {
-  name: 'BtnPause',
-  props: {
-    active: Boolean,
-    btnTitle: String
-  }
-}
-</script>

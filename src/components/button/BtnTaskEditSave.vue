@@ -6,9 +6,3 @@
     </svg>
   </button>
 </template>
-
-<script>
-export default {
-  name: 'BtnTaskEditSave'
-}
-</script>

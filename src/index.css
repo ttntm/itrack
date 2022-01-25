@@ -90,10 +90,6 @@
     }
   }
 
-  *:hover {
-    transition: all .35s ease;
-  }
-
   body {
     @apply font-sans;
     background-color: var(--bgColor);
@@ -123,8 +119,16 @@
     }
   }
 
+  .grab {
+    cursor: grab;
+  }
+
+  .grabbing * {
+    cursor: grabbing;
+  }
+
   footer a:hover {
-    text-decoration: underline;
+    @apply underline;
   }
 
   /* BUTTONS -------------------------------------------------------------------------------- */
@@ -151,23 +155,12 @@
     color: var(--buttonText);
   }
 
-  .btn-default:hover {
-    @apply shadow-none;
-    background-color: var(--buttonHoverColor);
-    color: var(--buttonHoverText);
-    border-color: var(--buttonHoverText);
-  }
-
   .btn-scale:active {
     transform: scale(0.9);
   }
 
   .btn-muted {
     @apply flex-shrink-0 text-gray-mid rounded-full w-8 h-8;
-  }
-
-  .btn-muted:hover {
-    @apply text-secondary bg-gray-mid;
   }
 
   /* BTN CONTROLS -------------------------------------------------------------------------------- */
@@ -180,18 +173,8 @@
     color: var(--buttonText);
   }
 
-  .btn-control:hover {
-    background-color: var(--buttonHoverColor);
-    color: var(--buttonHoverText);
-    border-color: var(--buttonHoverText);
-  }
-
   .control-active {
     @apply text-secondary bg-primary;
-  }
-
-  .control-active:hover {
-    @apply text-primary bg-secondary;
   }
 
   /* BTN SETTINGS -------------------------------------------------------------------------------- */
@@ -203,10 +186,6 @@
     .btn-settings {
       @apply absolute top-0 right-0 m-8;
     }
-  }
-
-  .btn-settings:hover {
-    @apply text-gray-dark;
   }
 
   .btn-settings:focus {
@@ -223,15 +202,15 @@
     .btn-theme-switch {
       @apply fixed bottom-0 right-0 flex items-center justify-center rounded-full text-gray-mid w-8 h-8 m-8;
     }
-  }
+  
+    .btn-theme-switch:hover {
+      @apply text-gray-dark;
+    }
 
-  .btn-theme-switch:hover {
-    @apply text-gray-dark;
-  }
-
-  .btn-theme-switch:focus {
-    outline: none;
-    @apply shadow-outline;
+    .btn-theme-switch:focus {
+      outline: none;
+      @apply shadow-outline;
+    }
   }
 
   /* BTN SAVE -------------------------------------------------------------------------------- */
@@ -251,11 +230,6 @@
     @apply border-b-2 rounded-lg px-3 py-2;
     background-color: var(--inputColor);
     border-color: var(--inputBorder);
-  }
-
-  .input-task:hover {
-    background-color: var(--inputHoverColor);
-    border-color: var(--inputHoverBorder);
   }
 
   .input-task:focus {
@@ -283,8 +257,12 @@
   .list-enter-active,
   .list-leave-active {
     opacity: 1;
-    transition: all 0.6s ease;
+    transition: all 0.5s ease;
   }
+
+  /* .list-move {
+    transition: transform 0.5s ease;
+  } */
 
   .list-enter-from,
   .list-leave-to {
@@ -357,7 +335,7 @@
   /* SETTINGS MODAL -------------------------------------------------------------------------------- */
 
   .settings {
-    @apply absolute top-0 right-0 max-w-md border rounded-lg shadow-lg m-8;
+    @apply absolute top-0 right-0 max-w-md border rounded-lg shadow-lg m-8 z-50;
     background-color: var(--settingsBG);
     border-color: var(--settingsBorder);
     width: calc(100% - 4rem);
@@ -388,6 +366,46 @@
     height: 0;
     max-height: 0;
     opacity: 0;
+  }
+
+  /* ---------- HOVER STYLES ---------- */
+  /* Styles that shouldn't trigger on touch devices where :hover doesn't work properly = doesn't unset itself */
+  /* See: https://stackoverflow.com/questions/23885255/how-to-remove-ignore-hover-css-style-on-touch-devices */
+
+  @media (hover: hover) and (pointer: fine) {
+    *:hover {
+      transition: all .35s ease;
+    }
+
+    .btn-default:hover {
+      @apply shadow-none;
+      background-color: var(--buttonHoverColor);
+      color: var(--buttonHoverText);
+      border-color: var(--buttonHoverText);
+    }
+
+    .btn-muted:hover {
+      @apply text-secondary bg-gray-mid;
+    }
+
+    .btn-control:hover {
+      background-color: var(--buttonHoverColor);
+      color: var(--buttonHoverText);
+      border-color: var(--buttonHoverText);
+    }
+
+    .control-active:hover {
+      @apply text-primary bg-secondary;
+    }
+
+    .btn-settings:hover {
+      @apply text-gray-dark;
+    }
+
+    .input-task:hover {
+      background-color: var(--inputHoverColor);
+      border-color: var(--inputHoverBorder);
+    }
   }
 
 @tailwind utilities;

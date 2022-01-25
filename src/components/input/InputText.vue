@@ -1,29 +1,24 @@
+<script setup>
+  import { onMounted, ref } from 'vue'
+
+  const props = defineProps({
+    modelValue: String,
+    pch: String
+  })
+
+  const emit = defineEmits(['update:modelValue'])
+
+  const input = ref()
+
+  onMounted(() => input.value.focus())
+</script>
+
 <template>
   <input
     :value="modelValue"
     type="text"
     :placeholder="pch"
-    v-focus="true"
+    ref="input"
     @input="$emit('update:modelValue', $event.target.value)"
   >
 </template>
-
-<script>
-export default {
-  name: 'InputText',
-  props: {
-    modelValue: String,
-    pch: String
-  },
-  emits: ['update:modelValue'],
-  directives: {
-    focus: {
-      mounted(el, binding) {
-        if (binding.value) {
-          el.focus();
-        }
-      }
-    }
-  }
-}
-</script>

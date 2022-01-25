@@ -1,79 +1,82 @@
-<script>
-import BtnDefault from './button/BtnDefault.vue';
-import BtnSave from './button/BtnSave.vue';
-import InputText from './input/InputText.vue'
-import Task from './Task.vue';
+<script setup>
+  import { computed, ref } from 'vue'
+  import draggable from 'vuedraggable'
+  import { useStore } from '@/store.js'
+  import { formatTime, getDate } from '@/utils.js'
 
-import { computed, reactive, ref } from 'vue';
-import { useStore } from '../store.js';
-import { formatTime, getDate } from '../utils.js'
+  import BtnDefault from '@/components/button/BtnDefault.vue'
+  import BtnSave from '@/components/button/BtnSave.vue'
+  import InputText from '@/components/input/InputText.vue'
+  import Task from '@/components/Task.vue'
 
-export default {
-  name: 'TaskList',
-  components: {
-    BtnDefault,
-    BtnSave,
-    InputText,
-    Task
-  },
-  setup() {
-    const { addTask, autoStart, deactivateAll, resetSavedTime, saveTime, setState, tasklist, tasklistTotal } = useStore();
+  const { addTask, autoStart, deactivateAll, enableDrag, resetSavedTime, saveTime, setState, tasklist, tasklistTotal } = useStore()
 
-    const newTask = reactive({
-      id: '',
-      name: '',
-      taskActive: false,
-      taskTotal: 0
-    });
+  const drag = ref(false)
+  const taskName = ref('')
 
-    const today = getDate();
-    const total = computed(() => tasklistTotal.value);
-    const totalDisplay = computed(() => { return formatTime(total.value) });
+  const localList = computed({
+    get: () => [...tasklist.value],
+    set: (val) => {      
+      const ordered = (arr) => arr.map((el, index) => {
+        el.order = index
+        return el
+      })
 
-    const createNewTask = () => {
-      if (newTask.name) {
-        newTask.id = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
-        
-        if (autoStart.value) {
-          deactivateAll();
-          newTask.taskActive = autoStart.value;
-        }
-
-        addTask({ ...newTask });
-
-        newTask.id = '';
-        newTask.name = '';
-      } else {
-        return alert('Please enter a task name!');
-      }
+      setState('tasklist', ordered(val), false)
     }
+  })
+  const total = computed(() => tasklistTotal.value)
+  const totalDisplay = computed(() => { return formatTime(total.value) })
+  
+  const dragComponent = {
+    tag: 'Task',
+    type: 'transition-group',
+    name: 'list'
+  }
+  const dragOptions = {
+    animation: 500,
+    ghostClass: 'ghost'
+  }
+  const today = getDate()
 
-    const resetBtnClick = () => {
-      if (confirm('This reset will stop tracking, reset all tracked time and save your task list - are you sure?')) {
-        resetSavedTime();
+  const events = {
+    onCreate() {
+      if (!taskName.value) {
+        return alert('Please enter a task name!')
+      }
+
+      const newTask = {
+        id: (Math.floor(Math.random() * 10000) + 10000).toString().substring(1),
+        name: taskName.value,
+        taskActive: false,
+        taskTotal: 0,
+        order: tasklist.value?.length || 0
+      }
+      
+      if (autoStart.value) {
+        deactivateAll()
+        newTask.taskActive = autoStart.value
+      }
+
+      addTask({ ...newTask })
+
+      taskName.value = ''
+    },
+
+    onReset() {
+      const msg = 'This reset will stop tracking, reset all tracked time and save your task list - are you sure?'
+      if (confirm(msg)) {
+        resetSavedTime()
       } else { 
         return
       }
-    }
+    },
 
-    const updateTotal = (minus) => {
-      let calc = minus ? total.value - minus : total.value + 1;
+    onUpdate(minus) {
+      let calc = minus ? total.value - minus : total.value + 1
       return setState('tasklistTotal', calc, saveTime.value)
     }
-
-    return {
-      createNewTask,
-      tasklist,
-      newTask,
-      resetBtnClick,
-      saveTime,
-      today,
-      total,
-      totalDisplay,
-      updateTotal
-    }
   }
-}
 </script>
 
 <template>
@@ -87,9 +90,20 @@ export default {
     </transition>
   </section>
   <section v-if="tasklist.length > 0" class="tasklist">
-    <transition-group name="list">
-      <Task v-for="task in tasklist" :key="task.id" :task="task" @reduce:total="updateTotal($event)" @update:total="updateTotal" />
-    </transition-group>
+    <draggable
+      :component-data="dragComponent"
+      :disabled="!enableDrag"
+      item-key="order"
+      tag="transition-group"
+      v-model="localList"
+      v-bind="dragOptions"
+      @start="drag=true"
+      @end="drag=false"
+    >
+      <template #item="{ element }">
+        <Task :key="element.id" :task="element" @reduce:total="events.onUpdate($event)" @update:total="events.onUpdate" />
+      </template>
+    </draggable>
   </section>
   <transition name="fade">
     <section v-if="tasklist.length > 0 || total > 0" class="my-8">
@@ -97,12 +111,22 @@ export default {
     </section>
   </transition>
   <section class="new-task my-8">
-    <InputText v-model="newTask.name" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="createNewTask" />
-    <BtnDefault @click="createNewTask">Add Task</BtnDefault>
+    <InputText v-model="taskName" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="events.onCreate" />
+    <BtnDefault @click="events.onCreate">Add Task</BtnDefault>
   </section>
   <transition name="fade">
     <div v-if="saveTime && tasklist.length > 0" class="text-center text-gray-dark small mb-16">
-      <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" @click="resetBtnClick">Reset Time Tracking</button>
+      <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" @click="events.onReset">Reset Time Tracking</button>
     </div>
   </transition>
 </template>
+
+<style lang="postcss" scoped>
+  .no-move {
+    transition: transform 0s;
+  }
+
+  .ghost {
+    @apply border-primary shadow-xl pointer-events-none;
+  }
+</style>
