@@ -90,7 +90,7 @@ export const useStore = () => {
 
     state.tasklist = filtered(state.tasklist)
 
-    if (savedTasks.length > 0) writeStateToLS('tasklist', filtered(savedTasks)) // remove saved tasks so they don't come back on reload
+    if (savedTasks?.length > 0) writeStateToLS('tasklist', filtered(savedTasks)) // remove saved tasks so they don't come back on reload
   }
 
   /**

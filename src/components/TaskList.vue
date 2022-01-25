@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, ref, watch } from 'vue'
+  import { computed, ref } from 'vue'
   import draggable from 'vuedraggable'
   import { useStore } from '@/store.js'
   import { formatTime, getDate } from '@/utils.js'
@@ -12,13 +12,21 @@
   const { addTask, autoStart, deactivateAll, enableDrag, resetSavedTime, saveTime, setState, tasklist, tasklistTotal } = useStore()
 
   const drag = ref(false)
-  const localList = ref([])
   const taskName = ref('')
 
+  const localList = computed({
+    get: () => [...tasklist.value],
+    set: (val) => {      
+      const ordered = (arr) => arr.map((el, index) => {
+        el.order = index
+        return el
+      })
+
+      setState('tasklist', ordered(val), false)
+    }
+  })
   const total = computed(() => tasklistTotal.value)
   const totalDisplay = computed(() => { return formatTime(total.value) })
-
-  watch(tasklist, () => localList.value = tasklist.value)
   
   const dragComponent = {
     tag: 'Task',
@@ -55,15 +63,6 @@
       taskName.value = ''
     },
 
-    onDragChange() {
-      const ordered = (arr) => arr.map((el, index) => {
-        el.order = index
-        return el
-      })
-
-      setState('tasklist', ordered([...localList.value]), false)
-    },
-
     onReset() {
       const msg = 'This reset will stop tracking, reset all tracked time and save your task list - are you sure?'
       if (confirm(msg)) {
@@ -78,8 +77,6 @@
       return setState('tasklistTotal', calc, saveTime.value)
     }
   }
-
-  localList.value = tasklist.value
 </script>
 
 <template>
@@ -101,7 +98,6 @@
       v-model="localList"
       v-bind="dragOptions"
       @start="drag=true"
-      @change="events.onDragChange"
       @end="drag=false"
     >
       <template #item="{ element }">
