@@ -1,4 +1,4 @@
-![](https://pbs.twimg.com/media/Etpcw2iXcAclJLE?format=jpg&name=medium)
+![](https://aitrack.work/img/demo.png)
 
 <h2 align='center'>aitrack.work</h2>
 
