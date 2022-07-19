@@ -9,7 +9,17 @@
   import InputText from '@/components/input/InputText.vue'
   import Task from '@/components/Task.vue'
 
-  const { addTask, autoStart, deactivateAll, enableDrag, resetSavedTime, saveTime, setState, tasklist, tasklistTotal } = useStore()
+  const {
+    addTask,
+    autoStart,
+    deactivateAll,
+    enableDrag,
+    resetSavedTime,
+    saveTime,
+    setState,
+    tasklist,
+    tasklistTotal
+  } = useStore()
 
   const drag = ref(false)
   const taskName = ref('')

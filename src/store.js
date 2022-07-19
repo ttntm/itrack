@@ -19,6 +19,7 @@ const ls = window.localStorage
 // keep the state object private so that we can have shared state across components!
 const state = reactive({
   appTheme: 'light',
+  appThemeAuto: true,
   autoStart: false,
   enableDrag: false,
   saveTime: false,
@@ -31,6 +32,7 @@ export const useStore = () => {
   // getters -- readonly
   const getActiveTasks = computed(() => state.tasklist.filter(task => task.taskActive))
   const getAppTheme = computed(() => state.appTheme)
+  const getAppThemeAuto = computed(() => state.appThemeAuto)
   const getAutoStart = computed(() => state.autoStart)
   const getEnableDrag = computed(() => state.enableDrag)
   const getSaveTime = computed(() => state.saveTime)
@@ -74,7 +76,7 @@ export const useStore = () => {
       let stored = ls.getItem(sKey)
       let storedState = JSON.parse(stored)
 
-      if (storedState && sKey in state) {
+      if ((storedState || isBoolean(storedState)) && sKey in state) {
         state[sKey] = storedState
       }
     })
@@ -176,6 +178,7 @@ export const useStore = () => {
   return {
     activeTasks: getActiveTasks,
     appTheme: getAppTheme,
+    appThemeAuto: getAppThemeAuto,
     autoStart: getAutoStart,
     enableDrag: getEnableDrag,
     saveTime: getSaveTime,
