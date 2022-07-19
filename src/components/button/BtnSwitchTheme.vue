@@ -14,6 +14,7 @@
   const onCLick = () => {
     appTheme.value === 'light' ? setState('appTheme', 'dark', true) : setState('appTheme', 'light', true)
     applyTheme(appTheme.value)
+    setState('appThemeAuto', false, true) // User choice overrides auto theme selection
     btn.value.blur()
   }
 </script>
