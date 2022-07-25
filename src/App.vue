@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, onMounted } from 'vue'
+  import { computed, onMounted, onUnmounted } from 'vue'
   import { useStore } from '@/store.js'
   import { applyTheme } from '@/utils.js'
 
@@ -47,6 +47,11 @@
 
     preferDark.addEventListener('change', setAutoTheme)
     window.addEventListener('beforeunload', onAppClose)
+  })
+
+  onUnmounted(() => {
+    preferDark.removeEventListener('change', setAutoTheme)
+    window.removeEventListener('beforeunload', onAppClose)
   })
 
   const onAppClose = (e) => {

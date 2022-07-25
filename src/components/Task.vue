@@ -90,7 +90,9 @@
       <BtnTaskEdit v-if="!editTask.editing" class="click-outside-ignore" @click="events.onEdit" />
       <div class="flex flex-grow items-center justify-start relative">
         <transition-group name="fade">
-          <p v-if="!editTask.editing" :class="{ 'font-bold' : active }" class="absolute w-full overflow-hidden" style="max-height: 1.25rem;">{{ task.name }}</p>
+          <p v-if="!editTask.editing" :class="{ 'font-bold' : active }" class="absolute w-full overflow-hidden" style="max-height: 1.25rem;">
+            {{ task.name }}
+          </p>
           <InputText v-if="editTask.editing" v-model="editTask.name" v-esc="events.onEdit" class="input-task absolute w-full px-2 py-1" @keydown.enter="events.onUpdate" />
         </transition-group>
       </div>

@@ -96,7 +96,9 @@
       <BtnSave v-if="tasklist.length > 0" />
     </transition>
     <transition name="fade">
-      <div v-if="tasklist.length > 0" class="w-full order-last text-center tracking-wide text-gray-dark text-sm mt-4">{{ today }}</div>
+      <div v-if="tasklist.length > 0" class="w-full order-last text-center tracking-wide text-gray-dark text-sm mt-4">
+        {{ today }}
+      </div>
     </transition>
   </section>
   <section v-if="tasklist.length > 0" class="tasklist">
@@ -117,7 +119,9 @@
   </section>
   <transition name="fade">
     <section v-if="tasklist.length > 0 || total > 0" class="my-8">
-      <p class="text-center text-xl font-bold tracking-wide text-gray-dark">All Tasks: {{ totalDisplay }}</p>
+      <p class="text-center text-xl font-bold tracking-wide text-gray-dark">
+        All Tasks: {{ totalDisplay }}
+      </p>
     </section>
   </transition>
   <section class="new-task my-8">
@@ -126,7 +130,9 @@
   </section>
   <transition name="fade">
     <div v-if="saveTime && tasklist.length > 0" class="text-center text-gray-dark small mb-16">
-      <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" @click="events.onReset">Reset Time Tracking</button>
+      <button class="border-b-2 border-transparent hover:border-primary focus:outline-none focus:shadow-outline focus:border-transparent" @click="events.onReset">
+        Reset Time Tracking
+      </button>
     </div>
   </transition>
 </template>

@@ -29,6 +29,7 @@
       // Restore automatic theme matching
       setState('appThemeAuto', true, true)
     },
+    
     onSave() {
       let theme = settings.darkTheme ? 'dark' : 'light'
       
@@ -74,7 +75,12 @@
           <InputToggle v-model="settings.autoStart" name="autostart" @update:modelValue="events.onUpdate('autoStart', $event)">Automatically start tracking for new tasks</InputToggle>
           <InputToggle v-model="settings.saveTaskTotal" name="save-total" @update:modelValue="events.onUpdate('saveTaskTotal', $event)">Save tasks with time tracked</InputToggle>
           <InputToggle v-model="settings.enableDrag" name="enable-drag" @update:modelValue="events.onUpdate('enableDrag', $event)">Enable drag & drop sorting</InputToggle>
-          <InputToggle v-model="settings.darkTheme" name="theme" @update:modelValue="events.onUpdate('darkTheme', $event)">Use dark theme <span v-if="appThemeAuto" class="inline-block ml-1" title="Manually selecting a theme will disable automatic theme matching" style="cursor: help;">&#9432;</span></InputToggle>
+          <InputToggle v-model="settings.darkTheme" name="theme" @update:modelValue="events.onUpdate('darkTheme', $event)">
+            Use dark theme
+            <span v-if="appThemeAuto" class="inline-block text-sm ml-1" title="Manually selecting a theme will disable automatic theme matching" style="cursor: help;">
+              &#9432;
+            </span>
+          </InputToggle>
           <div v-if="!appThemeAuto" class="text-center">
             <p class="inline-block border-b-2 border-transparent hover:border-primary cursor-pointer text-sm italic click-outside-ignore" @click="events.onRestoreAutoTheme">
               Restore automatic theme matching
