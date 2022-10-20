@@ -12,7 +12,9 @@
   const input = ref()
 
   onMounted(() => {
-    if (props.autofocus) input.value.focus()
+    setTimeout(() => {
+      if (props.autofocus) input.value.focus()
+    }, 250)
   })
 </script>
 

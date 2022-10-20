@@ -33,7 +33,6 @@
     setTimeout(readStateFromLS(['appTheme', 'appThemeAuto', 'autoStart', 'enableDrag', 'saveTime', 'tasklist', 'tasklistTotal']), 50)
     setTimeout(deactivateAll(), 100) // just in case someone has saved the task list with a running task
     setTimeout(() => {
-      console.log('ATA', appThemeAuto.value)
       if (appThemeAuto.value) {
         // User did not choose a theme, set automatically
         setAutoTheme(preferDark)
