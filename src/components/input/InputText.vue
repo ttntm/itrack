@@ -2,6 +2,7 @@
   import { onMounted, ref } from 'vue'
 
   const props = defineProps({
+    autofocus: Boolean,
     modelValue: String,
     pch: String
   })
@@ -10,7 +11,9 @@
 
   const input = ref()
 
-  onMounted(() => input.value.focus())
+  onMounted(() => {
+    if (props.autofocus) input.value.focus()
+  })
 </script>
 
 <template>

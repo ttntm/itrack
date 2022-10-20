@@ -125,7 +125,7 @@
     </section>
   </transition>
   <section class="new-task my-8">
-    <InputText v-model="taskName" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="events.onCreate" />
+    <InputText v-model="taskName" :autofocus="tasklist.length <= 0" class="input-task flex-grow mb-4 md:mb-0 md:mr-12" pch="Task Name, Ticket No., ..." @keyup.enter="events.onCreate" />
     <BtnDefault @click="events.onCreate">Add Task</BtnDefault>
   </section>
   <transition name="fade">
