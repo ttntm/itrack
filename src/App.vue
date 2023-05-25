@@ -16,6 +16,7 @@
     initTasklist,
     readStateFromLS,
     setState,
+    setTaskEditMode,
     settingsShown
   } = useStore()
 
@@ -46,11 +47,13 @@
 
     preferDark.addEventListener('change', setAutoTheme)
     window.addEventListener('beforeunload', onAppClose)
+    document.addEventListener('keydown', onESC)
   })
 
   onUnmounted(() => {
     preferDark.removeEventListener('change', setAutoTheme)
     window.removeEventListener('beforeunload', onAppClose)
+    document.removeEventListener('keydown', onESC)
   })
 
   const onAppClose = (e) => {
@@ -59,6 +62,12 @@
       e.returnValue = '' // Chrome
     } else {
       delete e['returnValue']
+    }
+  }
+
+  const onESC = (e) => {
+    if (e.key == 'Escape' || e.key == 'Esc' || e.keyCode == 27) {
+      setTaskEditMode(false)
     }
   }
 

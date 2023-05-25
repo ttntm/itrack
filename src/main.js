@@ -27,7 +27,7 @@ app.directive('click-outside', {
 app.directive('esc', {
   beforeMount(el, binding, vnode) {
     escHandler = (e) => {
-      if (e.key=='Escape' || e.key=='Esc' || e.keyCode==27) {
+      if (e.key == 'Escape' || e.key == 'Esc' || e.keyCode == 27) {
         binding.value()
       }
     }

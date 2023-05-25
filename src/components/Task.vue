@@ -16,7 +16,15 @@
 
   const emit = defineEmits(['reduce:total','update:total'])
 
-  const { enableDrag, removeTask, setActiveTask, setPausedTask, updateTask } = useStore()
+  const {
+    enableDrag,
+    removeTask,
+    setActiveTask,
+    setPausedTask,
+    setTaskEditMode,
+    taskEditMode,
+    updateTask
+  } = useStore()
 
   const editTask = reactive({
     editing: false,
@@ -28,6 +36,12 @@
   const timeSpent = computed(() => { return formatTime(taskTotal.value) })
 
   watch(active, () => active.value ? startTimerWorker() : stopTimerWorker())
+
+  watch(taskEditMode, () => {
+    if (editTask.editing && !taskEditMode.value) {
+      editTask.editing = false
+    }
+  })
 
   onMounted(() => {
     if (active.value) startTimerWorker()
@@ -62,7 +76,11 @@
 
     onEdit() {
       editTask.editing = !editTask.editing
-      return editTask.editing ? editTask.name = props.task.name : ''
+      
+      if (!!editTask.editing) {
+        editTask.name = props.task.name
+        setTaskEditMode(true)
+      }
     },
 
     onPause() {
@@ -90,10 +108,10 @@
       <BtnTaskEdit v-if="!editTask.editing" class="click-outside-ignore" @click="events.onEdit" />
       <div class="flex flex-grow items-center justify-start relative">
         <transition-group name="fade">
-          <p v-if="!editTask.editing" :class="{ 'font-bold' : active }" class="absolute w-full overflow-hidden" style="max-height: 1.25rem;">
+          <p v-if="!editTask.editing" :class="{ 'font-bold' : active }" class="absolute w-full overflow-hidden" style="max-height: 1.5rem;">
             {{ task.name }}
           </p>
-          <InputText v-if="editTask.editing" v-model="editTask.name" v-esc="events.onEdit" class="input-task absolute w-full px-2 py-1" @keydown.enter="events.onUpdate" />
+          <InputText v-if="editTask.editing" v-model="editTask.name" :autofocus="true" class="input-task absolute w-full px-2 py-1" @keydown.enter="events.onUpdate" />
         </transition-group>
       </div>
       <transition name="fade">

@@ -24,6 +24,7 @@ const state = reactive({
   enableDrag: false,
   saveTime: false,
   showSettings: false,
+  taskEditMode: false,
   tasklist: [],
   tasklistTotal: 0
 })
@@ -37,6 +38,7 @@ export const useStore = () => {
   const getEnableDrag = computed(() => state.enableDrag)
   const getSaveTime = computed(() => state.saveTime)
   const getSettingsDisplay = computed(() => state.showSettings)
+  const getTaskEditMode = computed(() => state.taskEditMode)
   const getTasklist = computed(() => state.tasklist)
   const getTasklistTotal = computed(() => state.tasklistTotal)
 
@@ -139,6 +141,14 @@ export const useStore = () => {
   }
 
   /**
+   * Contols taskEditMode
+   * @param {Boolean} isActive Current state
+   */
+  const setTaskEditMode = (isActive) => {
+    state.taskEditMode = isActive
+  }
+
+  /**
    * Show/hide the settings menu.
    */
   const toggleSettings = () => { state.showSettings = !state.showSettings }
@@ -183,6 +193,7 @@ export const useStore = () => {
     enableDrag: getEnableDrag,
     saveTime: getSaveTime,
     settingsShown: getSettingsDisplay,
+    taskEditMode: getTaskEditMode,
     tasklist: getTasklist,
     tasklistTotal: getTasklistTotal,
     addTask,
@@ -194,6 +205,7 @@ export const useStore = () => {
     setActiveTask,
     setPausedTask,
     setState,
+    setTaskEditMode,
     toggleSettings,
     updateTask,
     writeStateToLS
