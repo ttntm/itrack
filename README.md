@@ -12,11 +12,25 @@
   </a>
 </p>
 
-## Run @ `localhost`
+## Development
 
 1. `npm install`
 2. `npm run dev`
 3. Open `localhost:3000`
+
+## Desktop Version
+
+This project is adopting [Tauri](https://tauri.app) as of October 2023. The browser version / PWA should not be affected by this in any way.
+
+Status: WIP
+
+A Linux AppImage build has already been tested and is working.
+
+Consult the [Tauri > Prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites) first and build your own using `npm run tauri build`.
+
+### Cross-Platform Builds
+
+WIP - see: [Tauri > Cross-Platform Compilation](https://tauri.app/v1/guides/building/cross-platform).
 
 ## Credits
 

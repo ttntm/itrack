@@ -3,13 +3,15 @@
   "version": "2.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "tauri": "tauri"
   },
   "dependencies": {
     "vue": "^3.0.4",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^1.5.4",
     "@vitejs/plugin-vue": "^1.2.1",
     "@vue/compiler-sfc": "^3.0.4",
     "tailwindcss": "^1.8.10",
