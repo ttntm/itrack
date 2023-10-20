@@ -12,7 +12,10 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": false,
+      "shell": {
+        "open": true
+      }
     },
     "bundle": {
       "active": true,
@@ -56,10 +59,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 768,
+        "height": 720,
         "resizable": true,
         "title": "aitrack",
-        "width": 1024
+        "width": 1080
       }
     ]
   }
