@@ -1,4 +1,4 @@
-![](https://aitrack.work/img/demo.png)
+![](/public/img/demo.png)
 
 <h2 align='center'>aitrack.work</h2>
 
@@ -17,6 +17,12 @@
 1. `npm install`
 2. `npm run dev`
 3. Open `localhost:3000`
+
+## Contribute
+
+All future development of this project has moved to Codeberg:
+
+[![Contribute on Codeberg](/public/img/contribute_on_codeberg.png)](https://codeberg.org/ttntm/itrack)
 
 ## Credits
 
