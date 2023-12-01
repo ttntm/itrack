@@ -1,4 +1,4 @@
-![](/public/img/demo.png)
+[![Screenshot](/public/img/demo.png)](https://aitrack.work)
 
 <h2 align='center'>aitrack.work</h2>
 
@@ -23,6 +23,8 @@
 All future development of this project has moved to Codeberg:
 
 [![Contribute on Codeberg](/public/img/contribute_on_codeberg.png)](https://codeberg.org/ttntm/itrack)
+
+Commits are mirrored to GitHub, this project still utilizes GH > Netlify CI/CD for the time being.
 
 ## Credits
 
