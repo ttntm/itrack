@@ -47,6 +47,10 @@
   --taskCardActiveHoverBorder: var(--secondary);
   --settingsBG: #fff;
   --settingsBorder: transparent;
+  --shadowColorA: rgba(0, 0, 0, 0.1);
+  --shadowColorB: rgba(0, 0, 0, 0.06);
+  --shadowLgColorB: rgba(0, 0, 0, 0.05);
+  --shadowXlColorB: rgba(0, 0, 0, 0.04);
 }
 
 [data-theme="dark"] {
@@ -70,6 +74,10 @@
   --taskCardActiveHoverBorder: var(--primary);
   --settingsBG: var(--secondary);
   --settingsBorder: var(--gray-dark);
+  --shadowColorA: rgba(240, 240, 240, 0.1);
+  --shadowColorB: rgba(240, 240, 240, 0.06);
+  --shadowLgColorB: rgba(240, 240, 240, 0.05);
+  --shadowXlColorB: rgba(240, 240, 240, 0.04);
 }
 
 @tailwind base;
@@ -150,9 +158,10 @@
   }
 
   .btn-default {
-    @apply border border-transparent shadow px-8 py-2;
+    @apply border border-transparent px-8 py-2;
     background-color: var(--buttonColor);
     color: var(--buttonText);
+    box-shadow: 0 1px 3px 0 var(--shadowColorA), 0 1px 2px 0 var(--shadowColorB);
   }
 
   .btn-scale:active {
@@ -165,12 +174,13 @@
 
   /* BTN CONTROLS -------------------------------------------------------------------------------- */
   .btn-control {
-    @apply absolute border border-transparent rounded-full shadow w-8 h-8;
+    @apply absolute border border-transparent rounded-full w-8 h-8;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--buttonColor);
     color: var(--buttonText);
+    box-shadow: 0 1px 3px 0 var(--shadowColorA), 0 1px 2px 0 var(--shadowColorB);
   }
 
   .control-active {
@@ -272,10 +282,11 @@
 
   /* TASK ITEMS -------------------------------------------------------------------------------- */
   .task-item {
-    @apply flex flex-col rounded shadow border;
+    @apply flex flex-col rounded border;
     background-color: var(--taskCard);
     color: var(--taskText);
     border-color: var(--taskCardBorder);
+    box-shadow: 0 1px 3px 0 var(--shadowColorA), 0 1px 2px 0 var(--shadowColorB);
   }
 
   @media(min-width: 768px) {
@@ -290,9 +301,9 @@
   }
 
   .active {
-    @apply shadow-lg;
     background-color: var(--taskCardActive);
     border-color: var(--taskCardActiveBorder);
+    box-shadow: 0 10px 15px -3px var(--shadowColorA), 0 4px 6px -2px var(--shadowLgColorB);
     transform: scale(1.05);
   }
 
@@ -335,9 +346,10 @@
   /* SETTINGS MODAL -------------------------------------------------------------------------------- */
 
   .settings {
-    @apply absolute top-0 right-0 max-w-md border rounded-lg shadow-lg m-8 z-50;
+    @apply absolute top-0 right-0 max-w-md border rounded-lg m-8 z-50;
     background-color: var(--settingsBG);
     border-color: var(--settingsBorder);
+    box-shadow: 0 10px 15px -3px var(--shadowColorA), 0 4px 6px -2px var(--shadowLgColorB);
     width: calc(100% - 4rem);
   }
 

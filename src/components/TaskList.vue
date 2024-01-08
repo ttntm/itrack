@@ -143,6 +143,7 @@
   }
 
   .ghost {
-    @apply border-primary shadow-xl pointer-events-none;
+    @apply border-primary pointer-events-none;
+    box-shadow: 0 20px 25px -5px var(--shadowColorA), 0 10px 10px -5px var(--shadowXlColorB);
   }
 </style>
