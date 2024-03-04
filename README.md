@@ -30,7 +30,3 @@ Commits are mirrored to GitHub, this project still utilizes GH > Netlify CI/CD f
 
 - Design: [Sahar](https://sahar.design)
 - Idea: [abisxir](https://github.com/abisxir)
-
-## Status
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/19f9683c-2202-4616-be3c-e4411511c040/deploy-status)](https://app.netlify.com/sites/aitrack/deploys)
