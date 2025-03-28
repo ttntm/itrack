@@ -4,7 +4,8 @@ import path from 'path'
 
 export default defineConfig({
   build: {
-    cssCodeSplit: false
+    cssCodeSplit: false,
+    target: 'esnext'
   },
   optimizeDeps: {
     include: [

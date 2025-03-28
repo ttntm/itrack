@@ -83,7 +83,7 @@
 </script>
 
 <template>
-  <img class="w-64 mx-auto my-8 md:my-12" alt="aitrack.work logo" :src="logoSrc" />
+  <img class="w-64 mx-auto mt-8 mb-4 md:my-12" alt="aitrack.work logo" :src="logoSrc" />
   <BtnSettings />
   <transition name="modal">
     <Settings v-if="settingsShown" />
