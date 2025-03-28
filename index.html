@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="ttntm">
-  <meta name="robots" content="index,follow">
-  <title>aitrack.work</title>
-  <meta name="description" content="A simple task-based time tracker for everyday use.">
-  <meta name="theme-color" content="#1c1c1c">
-  <meta name="masapplication-config" content="/browserconfig.xml">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-180x180-solid.png">
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="canonical" href="https://aitrack.work">
-  <script>
-    'serviceWorker' in navigator && window.addEventListener('load', navigator.serviceWorker.register('/service-worker.js'));
-  </script>
-  <style>
-    html {font-family: sans-serif;}
-  </style>
-</head>
-<body class="flex flex-col items-stretch min-h-screen">
-  <noscript>
-    <strong>We're sorry but this application doesn't work without JavaScript enabled. Please enable JS to continue.</strong>
-  </noscript>
-  <main id="app" class="w-full flex-grow lg:w-2/3 xl:w-1/2 px-8 sm:px-12 lg:px-0 mx-auto" style="opacity: 0;"></main>
-  <footer class="flex-shrink-0 text-xs text-center text-gray-dark pb-4 md:mt-16">
-    <p class="text-sm font-bold tracking-wide">A simple task-based time tracker for everyday use.</p>
-    <p class="my-1">Made by <a href="https://ttntm.me" target="_blank" rel="noopener">ttntm</a>, designed by <a href="https://sahar.design" target="_blank" rel="noopener">Sahar</a>, inspired by <a href="https://github.com/abisxir" target="_blank" rel="noopener">abisxir</a>.</p>
-    <p>&copy; aitrack.work, <a href="https://codeberg.org/ttntm/itrack" target="_blank" rel="noopener">Code@Codeberg (GPL-3.0)</a></p>
-  </footer>
-  <script type="module" src="/src/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="ttntm">
+    <meta name="robots" content="index,follow">
+    <title>aitrack.work</title>
+    <meta name="description" content="A simple task-based time tracker for everyday use.">
+    <meta name="theme-color" content="#1c1c1c">
+    <meta name="masapplication-config" content="/browserconfig.xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-180x180-solid.png">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="canonical" href="https://aitrack.work">
+    <script>
+      'serviceWorker' in navigator && window.addEventListener('load', navigator.serviceWorker.register('/service-worker.js'));
+    </script>
+    <style>
+      html {font-family: sans-serif;}
+    </style>
+  </head>
+  <body class="flex flex-col items-stretch min-h-screen">
+    <noscript>
+      <strong>We're sorry but this application doesn't work without JavaScript enabled. Please enable JS to continue.</strong>
+    </noscript>
+    <main id="app" class="w-full flex-grow lg:w-2/3 xl:w-1/2 px-8 sm:px-12 lg:px-0 mx-auto" style="opacity: 0;"></main>
+    <footer class="flex-shrink-0 text-xs text-center text-gray-dark pb-4 md:mt-16">
+      <details>
+        <summary class="text-base border-b-2 border-transparent hover:border-primary hover:cursor-pointer mb-2 mx-auto" style="width: max-content;">About this project</summary>
+        <p class="text-sm tracking-wide">A simple task-based time tracker for everyday use.</p>
+        <p class="my-1">Made by <a href="https://ttntm.me" target="_blank" rel="noopener">ttntm</a>, designed by <a href="https://sahar.design" target="_blank" rel="noopener">Sahar</a>, inspired by <a href="https://github.com/abisxir" target="_blank" rel="noopener">abisxir</a>.</p>
+        <p>&copy; aitrack.work, <a href="https://codeberg.org/ttntm/itrack" target="_blank" rel="noopener">Code@Codeberg (GPL-3.0)</a></p>
+      </details>
+    </footer>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>

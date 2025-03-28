@@ -2,13 +2,13 @@ import { useStore } from './store.js'
 
 const { appTheme } = useStore()
 
-export const applyTheme = (theme) => {
+export function applyTheme(theme) {
   if (appTheme.value) {
     document.documentElement.setAttribute('data-theme', theme)
   }
 }
 
-export const formatTime = (input) => {
+export function formatTime(input) {
   let hrs = input / 3600
   hrs = hrs.toString().split('.')[0]
 
@@ -22,7 +22,7 @@ export const formatTime = (input) => {
     : `${(min < 10 ? '0' : '') + min}:${(sec < 10 ? '0' : '') + sec}`
 }
 
-export const getDate = () => {
+export function getDate() {
   let date = new Date()
 
   let dateOptions = {
@@ -33,4 +33,9 @@ export const getDate = () => {
   }
 
   return date.toLocaleDateString('en-US', dateOptions)
+}
+
+export function getTimestamp() {
+  const d = new Date()
+  return d.toISOString().split('T')[0].replaceAll('-', '')
 }
